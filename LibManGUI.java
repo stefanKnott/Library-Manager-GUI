@@ -77,7 +77,7 @@ public class LibManGUI{
    }
    private void showButtonDemo(){
 
-      headerLabel.setText("Control in action: Button"); 
+      headerLabel.setText("Library Manager"); 
  
   //resources folder should be inside SWING folder.
       //ImageIcon icon = createImageIcon("/resources/java_icon.png","Java");
@@ -89,27 +89,29 @@ public class LibManGUI{
 
       addButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-		final JTextField textField = new JTextField();					
+		/*final JTextField textField = new JTextField();
 		mainFrame.remove(controlPanel);
 		mainFrame.setContentPane(addPanel);
 		mainFrame.validate();
 		mainFrame.repaint();
-		textField.addActionListener(this);
+//		textField.addActionListener(this);
 		addButton2.addActionListener(new ActionListener()
 		{
-		public void actionPerformed(ActionEvent e){				String addBk = textField.getText();
+		public void actionPerformed(ActionEvent e){						String addBk = textField.getText().toString();
 			//textArea.append(addBk);
-			textField.selectAll();
-	//		System.out.println(addBk);
+//			textField.selectAll();
+			System.out.println(addBk);
 			String report = libManager.addHandler(addBk);
 			System.out.println(report);
-		}
+		}*/
 		//mainFrame.add(textField);
+		String input = JOptionPane.showInputDialog("Name of book to add");
+		String report = libManager.addHandler(input);
+		System.out.println(report);
 
 			
-         });          
-      }
-});
+         }          
+      });
 
 
       searchButton.addActionListener(new ActionListener() {
@@ -123,6 +125,7 @@ public class LibManGUI{
       chkOutButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
 		String input = JOptionPane.showInputDialog("Who checked the book out?");
+
 		
          }
       });
