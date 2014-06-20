@@ -1,6 +1,6 @@
 //package com.tooCoolforSchool.libraryManager.server;
 
-//import java.io.*;
+import java.io.*;
 //import java.util.Scanner;
 /**This class is an expadable array data structure
 @author Stefan Knott
@@ -24,21 +24,19 @@ public class expandableArray
 
 	public void addBook(Book bk)
 	{
-		if(totalBooks != 0)
-		{
-			shlfSpot = this.openSpot();
-		}
+
 		if(shlfSpot < 0 || shlfSpot > length)
 		{
 			System.out.println("Error!");
 		}
-		books[shlfSpot] = bk;
 		if(totalBooks == length)
 		{
 			this.expand();
 		}
-		books[shlfSpot].setLoc(shlfSpot);
+	
+		books[shlfSpot] = bk;
 		++totalBooks;
+		books[shlfSpot].setLoc(shlfSpot);
 		++shlfSpot;
 		System.out.println("Your book has been added to the shelf!");
 	}
@@ -98,85 +96,77 @@ public class expandableArray
 
 	public Book srchByTitle(String searchItem)
 	{
-//		System.out.println("Title of the book: ");
-        String bookTitle = searchItem;
-        //key.nextLine();
+        	String bookTitle = searchItem;
 		for(int i = 0; i < totalBooks; ++i)
-        {
+        	{
 			String temp = books[i].getTitle();
-            if(bookTitle.equals(temp))
-            {
-//            	System.out.println("Book found!");
-                return books[i];
-            }
-         }
+            		if(bookTitle.equals(temp))
+            		{
+                		return books[i];
+            		}
+         	}
 		return null;
 
 	}
 
 	public Book searchByRentersName(String rentee)
 	{
-		 //System.out.println("Rentee's name: ");
-         //String rentName = "0";
-         //key.nextLine();
-         //Book retBook = new Book();
          for(int i = 0; i < books.length; i++)
          {
         	 if(books[i].myRenter.equals(rentee))
-             {
-        		 //System.out.println(rentName + "has the following book rented: ");
-                 //books[i].displayReport();
-                 return books[i];
-             }
+             	 {
+                 	return books[i];
+             	 }
          }
          return null;
 	}
 	
 	public void editBook(Book bk)
 	{
-		System.out.println("Edit Options");
+/*		System.out.println("Edit Options");
 		System.out.println("1. Edit Title");
 		System.out.println("2. Edit Checkout Date");
 		int menuDecision = 0;
-//		key.nextInt();
-//		key.nextLine();
 		if(menuDecision == 1)
 		{
 			System.out.println("New Title: ");
 			String newTitle = "0";
-			//key.nextLine();
 			bk.setTitle(newTitle);
 		}else if(menuDecision == 2)
 		{
 			System.out.println("New Checkout Date: ");
 			int month = 0;
-			//key.nextInt();
 			int day = 0;
 			//key.nextInt();
 			int year = 0;
 			//key.nextInt();
 			//key.nextLine();
 			bk.setMyCheckoutDate(month, day, year);
-		}
+		}*/
 	}
 	
+	public void readFromFile()
+	{
+				
+	}
+
 	public void writeToFile()
 	{	
 		
-//		BufferedWriter writer = null;
-//		try
-//		{
-//		//	File library = new File(".txt");
-//			//PrintWriter output = new
-//			//PrintWriter("library.txt");
-//			for(int i = 0; i < totalBooks; ++i)
-//			{
-//				//output.println(books[i].displayReport() + "\n");
-//			}
-//			//output.close();
-//		}catch(IOException e)
-//		{
-//		}
+		BufferedWriter writer = null;
+		try
+		{
+			File library = new File(".txt");
+			PrintWriter output = new
+			PrintWriter("library.txt");
+			for(int i = 0; i < totalBooks; ++i)
+			{
+				output.println(books[i].displayReport());
+			}
+			output.close();
+		}catch(IOException e)
+		{
+		}
 	}
 }
 
