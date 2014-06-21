@@ -12,20 +12,18 @@ public class LibManGUI{
    private JLabel headerLabel;
    private JLabel statusLabel;
    private JPanel controlPanel, addPanel, searchPanel;
-   private JButton addButton2;
-   
+   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
+   private JTextField addTxt, searchTxt;
 
    public LibManGUI(){
       libManager library = new libManager();
-      addPanel = new JPanel();
       prepareGUI();
       
    }
 
    public static void main(String[] args){
       LibManGUI gui = new LibManGUI();      
-      gui.showButtonDemo();
-   
+      gui.showButtonDemo();   
    }
 
    private void prepareGUI(){
@@ -41,18 +39,27 @@ public class LibManGUI{
       statusLabel = new JLabel("",JLabel.CENTER);    
 
       statusLabel.setSize(350,100);
-
+ 
+      addButton = new JButton("Add");
+      searchButton = new JButton("Search");
+      chkOutButton = new JButton("Checkout");
       controlPanel = new JPanel();
+      controlPanel.add(addButton);
+      controlPanel.add(searchButton);
+      controlPanel.add(chkOutButton);
       controlPanel.setLayout(new FlowLayout());
       
       addButton2 = new JButton("Add");
- //     addPanel = new JPanel();
-      JTextField textBox = new JTextField(10);
-    //  textBox.setBounds(70, 25, 100, 30);
-    //  textBox.setSize(200, 100);
-
+      addTxt = new JTextField(10);
+      addPanel = new JPanel();
       addPanel.add(addButton2);
-      addPanel.add(textBox);
+      addPanel.add(addTxt);
+ 
+      searchButton2 = new JButton("Search");
+      searchTxt = new JTextField(10);
+      searchPanel = new JPanel();
+      searchPanel.add(searchButton2);
+      searchPanel.add(searchTxt);
       
       mainFrame.add(headerLabel);
       mainFrame.add(controlPanel);
@@ -71,10 +78,26 @@ public class LibManGUI{
          return null;
       }
    } */  
-   private void updateTxt()
-   {
-//	prepareGUI();
+   private void addPanel()
+   {	for(ActionListener al : addButton2.getActionListeners()){
+		addButton2.removeActionListener(al);
+	}
+		addButton2.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			String addBk = null;
+			addBk = addTxt.getText();
+			String report = libManager.addHandler(addBk);
+			System.out.println(report);
+			mainFrame.remove(addPanel);
+			mainFrame.setContentPane(controlPanel);
+			mainFrame.validate();
+			mainFrame.repaint();
+			return;
+		}
+         });          
+	
    }
+
    private void showButtonDemo(){
 
       headerLabel.setText("Library Manager"); 
@@ -82,50 +105,44 @@ public class LibManGUI{
   //resources folder should be inside SWING folder.
       //ImageIcon icon = createImageIcon("/resources/java_icon.png","Java");
 
-      JButton addButton = new JButton("Add");        
-      JButton searchButton = new JButton("Search");
-      JButton chkOutButton = new JButton("Checkout");
-      chkOutButton.setHorizontalTextPosition(SwingConstants.LEFT);   
+    //  JButton addButton = new JButton("Add");        
+    //  JButton searchButton = new JButton("Search");
+    //  JButton chkOutButton = new JButton("Checkout");
+    //  chkOutButton.setHorizontalTextPosition(SwingConstants.LEFT);   
 
       addButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-		/*final JTextField textField = new JTextField();
-		mainFrame.remove(controlPanel);
+//		final JTextField textField = new JTextField();
+		mainFrame.remove(controlPanel);		
 		mainFrame.setContentPane(addPanel);
 		mainFrame.validate();
 		mainFrame.repaint();
-//		textField.addActionListener(this);
-		addButton2.addActionListener(new ActionListener()
-		{
-		public void actionPerformed(ActionEvent e){						String addBk = textField.getText().toString();
-			//textArea.append(addBk);
-//			textField.selectAll();
-			System.out.println(addBk);
-			String report = libManager.addHandler(addBk);
-			System.out.println(report);
-		}*/
-		//mainFrame.add(textField);
-		String input = JOptionPane.showInputDialog("Name of book to add");
-		String report = libManager.addHandler(input);
-		System.out.println(report);
-
-			
-         }          
-      });
-
+		addPanel();
+		return;
+      }});
 
       searchButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-            	String input = JOptionPane.showInputDialog("Book Title");
+		mainFrame.remove(controlPanel);
+		mainFrame.setContentPane(searchPanel);
+		mainFrame.validate();
+		mainFrame.repaint();
+		searchButton2.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			String searchBk = searchTxt.getText();
+			String report = libManager.searchHandler(searchBk);
+			System.out.println(report);
+		}
+/*            	String input = JOptionPane.showInputDialog("Book Title");
 		String report = libManager.searchHandler(input);
-            	statusLabel.setText(report);
-         }
-      });
+            	statusLabel.setText(report);*/
+         });
+      }});
 
       chkOutButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
 		String input = JOptionPane.showInputDialog("Who checked the book out?");
-
+		
 		
          }
       });
