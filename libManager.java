@@ -30,9 +30,14 @@ public class libManager
 	 */
 	public static String addHandler(String title)
 	{
+		if(title == null)
+		{
+			return "Error";
+		}
 		Book newBook = new Book(title);
 		newBook.setTitle(title);
 		books.addBook(newBook);
+		books.writeToFile();
 		return newBook.displayReport();	
 		
 	}
@@ -44,6 +49,10 @@ public class libManager
 	 */
 	public static String searchHandler(String searchItem)
 	{
+		if(searchItem == null)
+		{
+			return "Error";
+		}
 		Book bk = books.searchHandler(searchItem);
 	//	if(bk.displayReport() ==
 		return bk.displayReport();
