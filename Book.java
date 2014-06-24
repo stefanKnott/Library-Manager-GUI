@@ -19,13 +19,14 @@ public class Book
 	/**This method constructs a book
 	 * @param title 
 	*/
-	public Book(String title)
+	public Book()
 	{
-		myTitle = title;
+		myTitle = null;
 		myRenter = null;
 		rentStatus = false;
 		myCheckoutDate = new Date();
 		myReturnDate = new Date();
+		myLoc = 0;
 	}
 	
 	/**This method constructs a book when passed a title, shelf spot, renter and rented status
@@ -34,9 +35,8 @@ public class Book
 	@param aRenter is the renter passed
 	@param rented is the rent status passed (0 or 1)
 	*/
-	public Book(String aTitle, int aLoc, String aRenter, boolean rented)
+	public Book(String aTitle, String aRenter, boolean rented)
 	{
-		myLoc = aLoc;
 		myTitle = aTitle;
 		myRenter = aRenter;
 		if(rentStatus != true)

@@ -34,7 +34,7 @@ public class libManager
 		{
 			return "Error";
 		}
-		Book newBook = new Book(title);
+		Book newBook = new Book();
 		newBook.setTitle(title);
 		books.addBook(newBook);
 		books.writeToFile();
