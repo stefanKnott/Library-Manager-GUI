@@ -35,7 +35,6 @@ public class libManager
 		Book newBook = new Book(title);
 		newBook.setTitle(title);
 		books.addBook(newBook);
-		books.writeToFile();
 		return newBook.displayReport();	
 		
 	}
@@ -94,6 +93,11 @@ public class libManager
 	{
 		Book bk = books.search(searchItem);
 		books.removeBook(bk);
+		books.writeToFile();
+	}
+
+	public static void writeToFileHandler()
+	{
 		books.writeToFile();
 	}
 }
