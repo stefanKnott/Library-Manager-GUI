@@ -10,7 +10,7 @@ public class LibManGUI extends JFrame{
    private JLabel headerLabel;
    private JLabel statusLabel;
    private JPanel controlPanel, addPanel, searchPanel, chkOutPanel;
-   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
+   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2, saveButton;
    private JTextField addTxt, searchTxt, bkTxt, rentTxt;
 
    public LibManGUI(){
@@ -42,10 +42,12 @@ public class LibManGUI extends JFrame{
       addButton = new JButton("Add");
       searchButton = new JButton("Search");
       chkOutButton = new JButton("Checkout");
+      saveButton = new JButton("Save");
       controlPanel = new JPanel();
       controlPanel.add(addButton);
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);
+      controlPanel.add(saveButton);
       controlPanel.setLayout(new FlowLayout());
       
       addButton2 = new JButton("Add");
@@ -126,8 +128,8 @@ public class LibManGUI extends JFrame{
 			mainFrame.setContentPane(controlPanel);
 			mainFrame.validate();
 			mainFrame.repaint();
-	for(ActionListener al : searchButton2.getActionListeners()){
-
+	for(ActionListener al : searchButton2.getActionListeners())
+	{
 		searchButton2.removeActionListener(al);
 	}	
 	}
@@ -135,8 +137,10 @@ public class LibManGUI extends JFrame{
 	return;
    }
 
-   private void chkOutPanel(){
-	for(ActionListener al : chkOutButton2.getActionListeners()){
+   private void chkOutPanel()
+   {
+	for(ActionListener al : chkOutButton2.getActionListeners())
+	{
 		chkOutButton2.removeActionListener(al);
 	}
 		chkOutButton2.addActionListener(new ActionListener(){
@@ -194,11 +198,17 @@ public class LibManGUI extends JFrame{
 	//	showButtonDemo();		
          }
       });
+	
+      saveButton.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		libManager.writeToFileHandler();
+	}
+      });
 
       controlPanel.add(addButton);
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);       
-
+      controlPanel.add(saveButton);
       mainFrame.setVisible(true);  
    }
 }
