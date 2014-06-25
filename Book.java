@@ -1,3 +1,4 @@
+//package libManGUI;
 //package com.tooCoolforSchool.libraryManager.server;
 
 //import java.util.Scanner;
@@ -13,20 +14,16 @@ public class Book
 	public String myRenter = "";
 	public int myLoc = 0;
 	public boolean rentStatus;
-	public Date myCheckoutDate = new Date();
-	public Date myReturnDate = new Date();
+
 	
 	/**This method constructs a book
 	 * @param title 
 	*/
-	public Book()
+	public Book(String title)
 	{
-		myTitle = null;
+		myTitle = title;
 		myRenter = null;
 		rentStatus = false;
-		myCheckoutDate = new Date();
-		myReturnDate = new Date();
-		myLoc = 0;
 	}
 	
 	/**This method constructs a book when passed a title, shelf spot, renter and rented status
@@ -35,8 +32,9 @@ public class Book
 	@param aRenter is the renter passed
 	@param rented is the rent status passed (0 or 1)
 	*/
-	public Book(String aTitle, String aRenter, boolean rented)
+	public Book(String aTitle, int aLoc, String aRenter, boolean rented)
 	{
+		myLoc = aLoc;
 		myTitle = aTitle;
 		myRenter = aRenter;
 		if(rentStatus != true)
@@ -75,30 +73,6 @@ public class Book
 		myRenter = renter;
 	}
 	
-	/**This method sets the checkout date for the Book
-	@param m is the month to be set
-	@param d is the day to be set
-	@param y is the year to be set
-	*/
-	public void setMyCheckoutDate(int m, int d, int y)
-	{
-		myCheckoutDate.setMonth(m);
-		myCheckoutDate.setDay(d);
-		myCheckoutDate.setYear(y);
-	}
-	
-	/**This method sets the return date for this book
-	@param m month to be set
-	@param d day to be set
-	@param y year to be set
-	*/
-	public void setReturnDate(int m, int d, int y)
-	{
-		myReturnDate.setMonth(m);
-		myReturnDate.setDay(d);
-		myReturnDate.setYear(y);
-	}
-	
 	/**This method sets the ID for this book
 	@param i set as ID for this book
 	*/
@@ -120,7 +94,7 @@ public class Book
 	*/
 	public String getRenter()
 	{
-		if (getRentStatus() == true)
+		if (getRentStatus() == false)
 			return "Book not currently checked out";
 		else
 			return myRenter;
@@ -139,22 +113,6 @@ public class Book
 		return myLoc;
 	}
 	
-	/**This method returns the checkout date for this book
-	@return myCheckoutDate returns checkout date of book
-	*/
-	public Date getCheckoutDate()
-	{
-		return myCheckoutDate;
-	}
-	
-	/**This method returns the return date for this book
-	@return myExitDate returns return date of book
-	*/
-	public Date getReturnDate()
-	{
-		return myReturnDate;
-	}
-	
 	/**This method returns the Title, Status, Renter, Checkout and Return date, and Shelf Spot
 	@return String this string includes all info of the book
 	*/
@@ -162,14 +120,7 @@ public class Book
 	{
 		String output = "";
 		output += myTitle + "\n";
-		if(rentStatus){
-			output += myRenter + "\n";
-		}
-		else{
-			output+= "Not Rented" +  "\n";
-	//		output += "My Shelf Spot: " + myLoc + "\n";
-		}
-		output += getCheckoutDate() + "\n";
+		output += myRenter + "\n";
 		return output;
 	}
 }
