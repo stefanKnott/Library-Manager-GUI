@@ -1,6 +1,5 @@
-//package com.tooCoolforSchool.libraryManager.server;
+//package libManGUI;
 
-//import java.util.Scanner;
 /**
  * 
  * @author Stefan KNOTT
@@ -10,7 +9,6 @@
  */
 public class libManager
 {
-	//static Scanner key = new Scanner(System.in);
 	public static expandableArray books;
 	static int menuDecision = 0;	
 
@@ -34,7 +32,7 @@ public class libManager
 		{
 			return "Error";
 		}
-		Book newBook = new Book();
+		Book newBook = new Book(title);
 		newBook.setTitle(title);
 		books.addBook(newBook);
 		books.writeToFile();
@@ -53,11 +51,27 @@ public class libManager
 		{
 			return "Error";
 		}
-		Book bk = books.searchHandler(searchItem);
-	//	if(bk.displayReport() ==
+		if(books.search(searchItem) == null)
+		{
+			return "Error";
+		}
+		Book bk = books.search(searchItem);
 		return bk.displayReport();
 	}
-
+	
+	public static String chkOutHandler(String bookTitle, String renter){
+		if(bookTitle == null || renter == null)
+		{
+			return "Error";
+		}
+		String report = books.checkOut(bookTitle, renter);
+		if(report == null)
+		{
+			return "Error";
+		}
+	//	bk.setMyRenter(renter);
+		return report;
+	}
 	/**
 	 * @author Stefan Knott
 	 * This method is used as a handler class.  It is needed to help make it easy to
@@ -65,17 +79,20 @@ public class libManager
 	 */
 	public static void editHandler(String searchItem)
 	{
-		Book bk = books.searchHandler(searchItem);
+		Book bk = books.search(searchItem);
 	    books.editBook(bk);
 	    if(bk != null)
 	    {
 	    	bk.displayReport();
 	    }
 	}
-	
+        public static void readInHandler()
+	{
+		books.readFromFile();
+	}	
 	public void removeHandler(String searchItem)
 	{
-		Book bk = books.searchHandler(searchItem);
+		Book bk = books.search(searchItem);
 		books.removeBook(bk);
 		books.writeToFile();
 	}
