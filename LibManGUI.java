@@ -1,44 +1,43 @@
+//package libManGUI;
 
 
-//package library;
- 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
  
-public class LibManGUI{
-    
+public class LibManGUI extends JFrame{ 
    private JFrame mainFrame;
    private JLabel headerLabel;
    private JLabel statusLabel;
-   private JPanel controlPanel, addPanel, searchPanel;
+   private JPanel controlPanel, addPanel, searchPanel, chkOutPanel;
    private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
-   private JTextField addTxt, searchTxt;
+   private JTextField addTxt, searchTxt, bkTxt, rentTxt;
 
    public LibManGUI(){
       libManager library = new libManager();
-      prepareGUI();
-      
+      libManager.readInHandler();
+	prepareGUI();      
    }
 
    public static void main(String[] args){
       LibManGUI gui = new LibManGUI();      
       gui.showButtonDemo();   
    }
-
+	
    private void prepareGUI(){
       mainFrame = new JFrame("Library Manager");
       mainFrame.setSize(400,400);
       mainFrame.setLayout(new GridLayout(3, 1));
+
+
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }        
       });    
+
       headerLabel = new JLabel("", JLabel.CENTER);        
       statusLabel = new JLabel("",JLabel.CENTER);    
-
-      statusLabel.setSize(350,100);
  
       addButton = new JButton("Add");
       searchButton = new JButton("Search");
@@ -54,18 +53,27 @@ public class LibManGUI{
       addPanel = new JPanel();
       addPanel.add(addButton2);
       addPanel.add(addTxt);
- 
+
       searchButton2 = new JButton("Search");
       searchTxt = new JTextField(10);
       searchPanel = new JPanel();
       searchPanel.add(searchButton2);
       searchPanel.add(searchTxt);
       
+	chkOutButton2 = new JButton("Check Out");
+	bkTxt = new JTextField(10);
+	rentTxt = new JTextField(10);
+	chkOutPanel = new JPanel();
+	chkOutPanel.add(chkOutButton2);
+	chkOutPanel.add(bkTxt);
+	chkOutPanel.add(rentTxt);
+
       mainFrame.add(headerLabel);
       mainFrame.add(controlPanel);
       mainFrame.add(statusLabel);
+
       mainFrame.setVisible(true);  
-      
+
    }
     
    /*private static ImageIcon createImageIcon(String path, 
@@ -79,29 +87,75 @@ public class LibManGUI{
       }
    } */  
    private void addPanel()
-   {	for(ActionListener al : addButton2.getActionListeners()){
+   {
+	for(ActionListener al : addButton2.getActionListeners()){
 		addButton2.removeActionListener(al);
 	}
 		addButton2.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			String addBk = null;
+			String addBk = new String();
 			addBk = addTxt.getText();
+			if(addBk.equals(""))
+			{}else{
 			String report = libManager.addHandler(addBk);
 			System.out.println(report);
+			}
 			mainFrame.remove(addPanel);
 			mainFrame.setContentPane(controlPanel);
 			mainFrame.validate();
 			mainFrame.repaint();
-			return;
+	for(ActionListener al : addButton2.getActionListeners()){
+		addButton2.removeActionListener(al);
+	}			
 		}
          });          
-	
+   
    }
 
-   private void showButtonDemo(){
+   private void searchPanel(){
+	for(ActionListener al : searchButton2.getActionListeners()){
 
+		searchButton2.removeActionListener(al);
+	}		
+		searchButton2.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			String searchBk = searchTxt.getText();
+			String report = libManager.searchHandler(searchBk);
+			System.out.println(report);
+			mainFrame.remove(searchPanel);
+			mainFrame.setContentPane(controlPanel);
+			mainFrame.validate();
+			mainFrame.repaint();
+	for(ActionListener al : searchButton2.getActionListeners()){
+
+		searchButton2.removeActionListener(al);
+	}	
+	}
+         });
+	return;
+   }
+
+   private void chkOutPanel(){
+	for(ActionListener al : chkOutButton2.getActionListeners()){
+		chkOutButton2.removeActionListener(al);
+	}
+		chkOutButton2.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			String bk = bkTxt.getText();
+			String renter = rentTxt.getText();
+			String report = libManager.chkOutHandler(bk, renter);
+			System.out.println(report);
+			mainFrame.remove(searchPanel);
+			mainFrame.setContentPane(controlPanel);
+			mainFrame.validate();
+			mainFrame.repaint();
+		}
+         });
+   }
+	
+
+   private void showButtonDemo(){
       headerLabel.setText("Library Manager"); 
- 
   //resources folder should be inside SWING folder.
       //ImageIcon icon = createImageIcon("/resources/java_icon.png","Java");
 
@@ -112,13 +166,12 @@ public class LibManGUI{
 
       addButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-//		final JTextField textField = new JTextField();
 		mainFrame.remove(controlPanel);		
 		mainFrame.setContentPane(addPanel);
 		mainFrame.validate();
 		mainFrame.repaint();
 		addPanel();
-		return;
+	//	showButtonDemo();
       }});
 
       searchButton.addActionListener(new ActionListener() {
@@ -127,23 +180,18 @@ public class LibManGUI{
 		mainFrame.setContentPane(searchPanel);
 		mainFrame.validate();
 		mainFrame.repaint();
-		searchButton2.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-			String searchBk = searchTxt.getText();
-			String report = libManager.searchHandler(searchBk);
-			System.out.println(report);
-		}
-/*            	String input = JOptionPane.showInputDialog("Book Title");
-		String report = libManager.searchHandler(input);
-            	statusLabel.setText(report);*/
-         });
+		searchPanel();
+	//	showButtonDemo();
       }});
 
       chkOutButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-		String input = JOptionPane.showInputDialog("Who checked the book out?");
-		
-		
+		mainFrame.remove(controlPanel);
+		mainFrame.setContentPane(chkOutPanel);
+		mainFrame.validate();
+		mainFrame.repaint();
+		chkOutPanel();
+	//	showButtonDemo();		
          }
       });
 
