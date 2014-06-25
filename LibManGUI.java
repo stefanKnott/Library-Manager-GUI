@@ -4,6 +4,11 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
  
 public class LibManGUI extends JFrame{ 
    private JFrame mainFrame;
@@ -25,10 +30,12 @@ public class LibManGUI extends JFrame{
    }
 	
    private void prepareGUI(){
+
       mainFrame = new JFrame("Library Manager");
       mainFrame.setSize(400,400);
       mainFrame.setLayout(new GridLayout(3, 1));
 
+      mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
 
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
@@ -48,6 +55,13 @@ public class LibManGUI extends JFrame{
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);
       controlPanel.add(saveButton);
+      controlPanel.setBackground(Color.BLACK);
+	try{
+	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
+	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
+	controlPanel.add(picLabel);
+	}catch(IOException e){}
+    
       controlPanel.setLayout(new FlowLayout());
       
       addButton2 = new JButton("Add");
