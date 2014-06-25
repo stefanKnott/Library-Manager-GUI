@@ -1,3 +1,5 @@
+//package libManGUI;
+
 //package com.tooCoolforSchool.libraryManager.server;
 
 import java.io.*;
@@ -71,54 +73,48 @@ public class expandableArray
 		books[bk.myLoc] = null;
 	}
 	
-	 public Book searchHandler(String search_item)
-     {
-//		int menuDecision = 0;
-//        System.out.println("How would you like to search?");
-//        System.out.println("1. By Book Title");
-//        System.out.println("2. By Rentee's name");
-//        menuDecision = key.nextInt();
-//        key.nextLine();
-//        if(menuDecision == 1)
-//        {
-//			this.srchByTitle();
-//        }else if(menuDecision == 2)
-//        {
-//			this.searchByRentersName();
-//        }
-		 
+	 public Book search(String search_item)
+   	{
+	if(totalBooks == 0)
+	{
+		return null;
+	}	 
 		 if(srchByTitle(search_item) != null)
 			 return srchByTitle(search_item);
 		 else
 		 	return searchByRentersName(search_item);
-	
 	 }
-
+	
+	public String checkOut(String book, String renter)
+	{
+		search(book).setMyRenter(renter);
+		search(book).setRentStatus(true);
+		return search(book).displayReport();
+	}
 	public Book srchByTitle(String searchItem)
 	{
-        	String bookTitle = searchItem;
+      	String bookTitle = searchItem;
 		for(int i = 0; i < totalBooks; ++i)
-        	{
+      	{
 			String temp = books[i].getTitle();
-            		if(bookTitle.equals(temp))
-            		{
-                		return books[i];
-            		}
-         	}
+          		if(bookTitle.equals(temp))
+          		{
+              		return books[i];
+          		}
+       	}
 		return null;
-
 	}
 
 	public Book searchByRentersName(String rentee)
 	{
-         for(int i = 0; i < books.length; i++)
-         {
-        	 if(books[i].myRenter.equals(rentee))
-             	 {
-                 	return books[i];
-             	 }
-         }
-         return null;
+       for(int i = 0; i < totalBooks; i++)
+       {
+      	 if(books[i].myRenter.equals(rentee))
+           	 {
+               	return books[i];
+           	 }
+       }
+       return null;
 	}
 	
 	public void editBook(Book bk)
@@ -146,17 +142,32 @@ public class expandableArray
 	}
 	
 	public void readFromFile()
-	{
-				
+	{       
+		int i = 0;
+		try{
+		BufferedReader in = new BufferedReader(new FileReader("library.txt"));
+	//	if(in == null){return;}
+		String line;
+		while((line = in.readLine()) != null)
+		{
+			Book bk = new Book(line);
+			line = in.readLine();
+			bk.myRenter = line;
+			addBook(bk);
+			line = in.readLine();
+		}
+		in.close();
+		}catch(IOException e){}
+		
 	}
 
 	public void writeToFile()
 	{	
 		
-		BufferedWriter writer = null;
+//		BufferedWriter writer = null;
 		try
 		{
-			File library = new File(".txt");
+		//	File library = new File(".txt");
 			PrintWriter output = new
 			PrintWriter("library.txt");
 			for(int i = 0; i < totalBooks; ++i)
@@ -169,4 +180,3 @@ public class expandableArray
 		}
 	}
 }
-
