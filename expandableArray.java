@@ -1,7 +1,3 @@
-//package libManGUI;
-
-//package com.tooCoolforSchool.libraryManager.server;
-
 import java.io.*;
 //import java.util.Scanner;
 /**This class is an expadable array data structure
