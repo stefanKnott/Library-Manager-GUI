@@ -15,8 +15,15 @@ public class Book
 	public int myLoc = 0;
 	public boolean rentStatus;
 
+	//Default Constructor
+	public Book()
+	{
+		myTitle = null;
+		myRenter = null;
+		rentStatus = false;
+	}
 	
-	/**This method constructs a book
+	/**This method constructs a book with just a title
 	 * @param title 
 	*/
 	public Book(String title)
