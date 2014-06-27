@@ -33,7 +33,7 @@ public class LibManGUI extends JFrame{
 
       mainFrame = new JFrame("Library Manager");
       mainFrame.setSize(400,400);
-      mainFrame.setLayout(new GridLayout(3, 1));
+      mainFrame.setLayout(new GridLayout(3, 2, 3, 3));
 
       mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
 
@@ -101,7 +101,16 @@ public class LibManGUI extends JFrame{
          System.err.println("Couldn't find file: " + path);
          return null;
       }
-   } */  
+   } */ 
+
+   private void resetPane(JPanel rmv)
+   {
+			mainFrame.remove(rmv);
+			mainFrame.setContentPane(controlPanel);
+			mainFrame.validate();
+			mainFrame.repaint();
+   }
+ 
    private void addPanel()
    {
 	for(ActionListener al : addButton2.getActionListeners()){
@@ -110,16 +119,13 @@ public class LibManGUI extends JFrame{
 		addButton2.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			String addBk = new String();
-			addBk = addTxt.getText();
+			addBk = addTxt.getText().trim();
 			if(addBk.equals(""))
 			{}else{
 			String report = libManager.addHandler(addBk);
 			System.out.println(report);
 			}
-			mainFrame.remove(addPanel);
-			mainFrame.setContentPane(controlPanel);
-			mainFrame.validate();
-			mainFrame.repaint();
+			resetPane(addPanel);
 	for(ActionListener al : addButton2.getActionListeners()){
 		addButton2.removeActionListener(al);
 	}			
@@ -135,13 +141,13 @@ public class LibManGUI extends JFrame{
 	}		
 		searchButton2.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			String searchBk = searchTxt.getText();
+			String searchBk = searchTxt.getText().trim();
+			if(searchBk.equals("")){}
+			else{
 			String report = libManager.searchHandler(searchBk);
 			System.out.println(report);
-			mainFrame.remove(searchPanel);
-			mainFrame.setContentPane(controlPanel);
-			mainFrame.validate();
-			mainFrame.repaint();
+			}
+			resetPane(searchPanel);
 	for(ActionListener al : searchButton2.getActionListeners())
 	{
 		searchButton2.removeActionListener(al);
@@ -159,14 +165,17 @@ public class LibManGUI extends JFrame{
 	}
 		chkOutButton2.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			String bk = bkTxt.getText();
-			String renter = rentTxt.getText();
+			String bk = bkTxt.getText().trim();
+			String renter = rentTxt.getText().trim();
+			if(bk.equals("") || renter.equals("")){}
+			else{
 			String report = libManager.chkOutHandler(bk, renter);
-			System.out.println(report);
-			mainFrame.remove(searchPanel);
-			mainFrame.setContentPane(controlPanel);
-			mainFrame.validate();
-			mainFrame.repaint();
+			if(report.equals("Error")){}
+			else{
+			System.out.println(report);	
+			}
+			}
+			resetPane(chkOutPanel);
 		}
          });
    }
@@ -174,14 +183,6 @@ public class LibManGUI extends JFrame{
 
    private void showButtonDemo(){
       headerLabel.setText("Library Manager"); 
-  //resources folder should be inside SWING folder.
-      //ImageIcon icon = createImageIcon("/resources/java_icon.png","Java");
-
-    //  JButton addButton = new JButton("Add");        
-    //  JButton searchButton = new JButton("Search");
-    //  JButton chkOutButton = new JButton("Checkout");
-    //  chkOutButton.setHorizontalTextPosition(SwingConstants.LEFT);   
-
       addButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
 		mainFrame.remove(controlPanel);		
@@ -189,7 +190,6 @@ public class LibManGUI extends JFrame{
 		mainFrame.validate();
 		mainFrame.repaint();
 		addPanel();
-	//	showButtonDemo();
       }});
 
       searchButton.addActionListener(new ActionListener() {
@@ -199,7 +199,6 @@ public class LibManGUI extends JFrame{
 		mainFrame.validate();
 		mainFrame.repaint();
 		searchPanel();
-	//	showButtonDemo();
       }});
 
       chkOutButton.addActionListener(new ActionListener() {
@@ -209,7 +208,6 @@ public class LibManGUI extends JFrame{
 		mainFrame.validate();
 		mainFrame.repaint();
 		chkOutPanel();
-	//	showButtonDemo();		
          }
       });
 	
