@@ -1,16 +1,28 @@
 //package libManGUI;
 //
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
  
 public class LibManGUI extends JFrame{ 
+
+   private static final long serialVersionUID = 1L;
    private JFrame mainFrame;
    private JLabel headerLabel;
    private JLabel statusLabel;
@@ -19,7 +31,7 @@ public class LibManGUI extends JFrame{
    private JTextField addTxt, searchTxt, bkTxt, rentTxt;
 
    public LibManGUI(){
-      libManager library = new libManager();
+      new libManager();
       libManager.readInHandler();
 	prepareGUI();      
    }
