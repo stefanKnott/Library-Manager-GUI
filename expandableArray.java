@@ -87,9 +87,17 @@ public class expandableArray
 	
 	public String checkOut(String book, String renter)
 	{
+		Book bk = new Book();
+		bk = search(book);
+		if(bk == null)
+		{
+			return "Error";
+		}
+		else{
 		search(book).setMyRenter(renter);
 		search(book).setRentStatus(true);
 		return search(book).displayReport();
+		}
 	}
 	public Book srchByTitle(String searchItem)
 	{
@@ -107,7 +115,7 @@ public class expandableArray
 
 	public Book searchByRentersName(String rentee)
 	{
-       for(int i = 0; i < totalBooks; i++)
+       for(int i = 0; i < books.length(); i++)
        {
       	 if(books[i].myRenter.equals(rentee))
            	 {
