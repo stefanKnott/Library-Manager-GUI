@@ -64,7 +64,7 @@ public class libManager
 			return "Error";
 		}
 		String report = books.checkOut(bookTitle, renter);
-		if(report == null)
+		if(report.equals("Error"))
 		{
 			return "Error";
 		}
