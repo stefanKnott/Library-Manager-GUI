@@ -44,8 +44,8 @@ public class LibManGUI extends JFrame{
    private void prepareGUI(){
 
       mainFrame = new JFrame("Library Manager");
-      mainFrame.setSize(400,400);
-      mainFrame.setLayout(new GridLayout(3, 2, 3, 3));
+      mainFrame.setSize(250,250);
+      mainFrame.setLayout(new GridLayout());
 
       mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
 
@@ -71,10 +71,11 @@ public class LibManGUI extends JFrame{
 	try{
 	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
 	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
+	picLabel.setLocation(125, 50);
 	controlPanel.add(picLabel);
 	}catch(IOException e){}
     
-      controlPanel.setLayout(new FlowLayout());
+      controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
       
       addButton2 = new JButton("Add");
       addTxt = new JTextField(10);
@@ -96,29 +97,18 @@ public class LibManGUI extends JFrame{
 	chkOutPanel.add(bkTxt);
 	chkOutPanel.add(rentTxt);
 
-      mainFrame.add(headerLabel);
+  //    mainFrame.add(headerLabel);
       mainFrame.add(controlPanel);
-      mainFrame.add(statusLabel);
+//      mainFrame.add(statusLabel);
 
       mainFrame.setVisible(true);  
 
    }
-    
-   /*private static ImageIcon createImageIcon(String path, 
-      String description) {
-      java.net.URL imgURL = LibManGUI.class.getResource(path);
-      if (imgURL != null) {
-         return new ImageIcon(imgURL, description);
-      } else {            
-         System.err.println("Couldn't find file: " + path);
-         return null;
-      }
-   } */ 
 
-   private void resetPane(JPanel rmv)
+   private void resetPane(JPanel rmv, JPanel set)
    {
 			mainFrame.remove(rmv);
-			mainFrame.setContentPane(controlPanel);
+			mainFrame.setContentPane(set);
 			mainFrame.validate();
 			mainFrame.repaint();
    }
@@ -135,9 +125,12 @@ public class LibManGUI extends JFrame{
 			if(addBk.equals(""))
 			{}else{
 			String report = libManager.addHandler(addBk);
+			if(report.equals("Error")){}
+			else{
 			System.out.println(report);
 			}
-			resetPane(addPanel);
+			}
+			resetPane(addPanel, controlPanel);
 	for(ActionListener al : addButton2.getActionListeners()){
 		addButton2.removeActionListener(al);
 	}			
@@ -157,9 +150,12 @@ public class LibManGUI extends JFrame{
 			if(searchBk.equals("")){}
 			else{
 			String report = libManager.searchHandler(searchBk);
+			if(report.equals("Error")){}
+			else{
 			System.out.println(report);
 			}
-			resetPane(searchPanel);
+			}
+			resetPane(searchPanel, controlPanel);
 	for(ActionListener al : searchButton2.getActionListeners())
 	{
 		searchButton2.removeActionListener(al);
@@ -187,7 +183,7 @@ public class LibManGUI extends JFrame{
 			System.out.println(report);	
 			}
 			}
-			resetPane(chkOutPanel);
+			resetPane(chkOutPanel, controlPanel);
 		}
          });
    }
@@ -206,20 +202,15 @@ public class LibManGUI extends JFrame{
 
       searchButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-		mainFrame.remove(controlPanel);
-		mainFrame.setContentPane(searchPanel);
-		mainFrame.validate();
-		mainFrame.repaint();
+		resetPane(controlPanel, searchPanel);
 		searchPanel();
       }});
 
       chkOutButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-		mainFrame.remove(controlPanel);
-		mainFrame.setContentPane(chkOutPanel);
-		mainFrame.validate();
-		mainFrame.repaint();
+		resetPane(controlPanel, chkOutPanel);
 		chkOutPanel();
+		
          }
       });
 	
