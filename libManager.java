@@ -63,11 +63,12 @@ public class libManager
 		{
 			return "Error";
 		}
-		String report = books.checkOut(bookTitle, renter);
+		String report = books.search(bookTitle).displayReport();
 		if(report.equals("Error"))
 		{
 			return "Error";
 		}
+		books.checkOut(bookTitle, renter);
 	//	bk.setMyRenter(renter);
 		return report;
 	}
