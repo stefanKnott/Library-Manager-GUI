@@ -101,9 +101,9 @@ public class Book
 	*/
 	public String getRenter()
 	{
-		if (getRentStatus() == false)
-			return "Book not currently checked out";
-		else
+		//if (getRentStatus() == false)
+		//	return "Book not currently checked out";
+		//else
 			return myRenter;
 	}
 	

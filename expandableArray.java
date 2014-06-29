@@ -141,35 +141,11 @@ public class expandableArray
        		return null;
 	}
 	
-	public void editBook(Book bk)
-	{
-/*		System.out.println("Edit Options");
-		System.out.println("1. Edit Title");
-		System.out.println("2. Edit Checkout Date");
-		int menuDecision = 0;
-		if(menuDecision == 1)
-		{
-			System.out.println("New Title: ");
-			String newTitle = "0";
-			bk.setTitle(newTitle);
-		}else if(menuDecision == 2)
-		{
-			System.out.println("New Checkout Date: ");
-			int month = 0;
-			int day = 0;
-			//key.nextInt();
-			int year = 0;
-			//key.nextInt();
-			//key.nextLine();
-			bk.setMyCheckoutDate(month, day, year);
-		}*/
-	}
-	
+
 	/**Loads library (books and renters) into the program from the text file library.txt found in the same directory as the source code.
 	*/
 	public void readFromFile()
 	{       
-		int i = 0;
 		try{
 			BufferedReader in = new BufferedReader(new FileReader("library.txt"));
 			String line;
