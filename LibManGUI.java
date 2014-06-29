@@ -24,7 +24,7 @@ public class LibManGUI extends JFrame{
    private JLabel headerLabel;
    private JLabel statusLabel;
    private JPanel controlPanel, addPanel, searchPanel, chkOutPanel;
-   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2, saveButton;
+   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
    private JTextField addTxt, searchTxt, bkTxt, rentTxt;
 
    public LibManGUI(){
@@ -41,15 +41,14 @@ public class LibManGUI extends JFrame{
    private void prepareGUI(){
 
       mainFrame = new JFrame("Library Manager");
-      mainFrame.setSize(250,250);
+      mainFrame.setSize(250,200);
       mainFrame.setLayout(new GridLayout());
-
       mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
-
-
 
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
+		libManager.writeToFileHandler();
+		
             System.exit(0);
          }        
       });    
@@ -60,19 +59,17 @@ public class LibManGUI extends JFrame{
       addButton = new JButton("Add");
       searchButton = new JButton("Search");
       chkOutButton = new JButton("Checkout");
-      saveButton = new JButton("Save");
       controlPanel = new JPanel();
       controlPanel.add(addButton);
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);
-      controlPanel.add(saveButton);
       controlPanel.setBackground(Color.BLACK);
-	try{
+      try{
 	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
 	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
-	picLabel.setLocation(125, 50);
+//	picLabel.setLocation(125, 50);
 	controlPanel.add(picLabel);
-	}catch(IOException e){}
+       }catch(IOException e){}
     
       controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
       
@@ -108,7 +105,7 @@ public class LibManGUI extends JFrame{
 	mainFrame.setContentPane(set);
 	mainFrame.validate();
 	mainFrame.repaint();
-      mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
+        mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
 	
    }
  
@@ -213,16 +210,10 @@ public class LibManGUI extends JFrame{
          }
       });
 	
-      saveButton.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		libManager.writeToFileHandler();
-	}
-      });
-
       controlPanel.add(addButton);
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);       
-      controlPanel.add(saveButton);
+
       mainFrame.setVisible(true);  
    }
 }
