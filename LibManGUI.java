@@ -1,6 +1,3 @@
-//package libManGUI;
-//
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -33,12 +30,12 @@ public class LibManGUI extends JFrame{
    public LibManGUI(){
       new libManager();
       libManager.readInHandler();
-	prepareGUI();      
+      prepareGUI();      
    }
 
    public static void main(String[] args){
       LibManGUI gui = new LibManGUI();      
-      gui.showButtonDemo();   
+      gui.runGUI();   
    }
 	
    private void prepareGUI(){
@@ -48,6 +45,8 @@ public class LibManGUI extends JFrame{
       mainFrame.setLayout(new GridLayout());
 
       mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
+
+
 
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
@@ -97,9 +96,7 @@ public class LibManGUI extends JFrame{
 	chkOutPanel.add(bkTxt);
 	chkOutPanel.add(rentTxt);
 
-  //    mainFrame.add(headerLabel);
       mainFrame.add(controlPanel);
-//      mainFrame.add(statusLabel);
 
       mainFrame.setVisible(true);  
 
@@ -107,10 +104,12 @@ public class LibManGUI extends JFrame{
 
    private void resetPane(JPanel rmv, JPanel set)
    {
-			mainFrame.remove(rmv);
-			mainFrame.setContentPane(set);
-			mainFrame.validate();
-			mainFrame.repaint();
+	mainFrame.remove(rmv);
+	mainFrame.setContentPane(set);
+	mainFrame.validate();
+	mainFrame.repaint();
+      mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
+	
    }
  
    private void addPanel()
@@ -131,6 +130,8 @@ public class LibManGUI extends JFrame{
 			}
 			}
 			resetPane(addPanel, controlPanel);
+      			mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
+	
 	for(ActionListener al : addButton2.getActionListeners()){
 		addButton2.removeActionListener(al);
 	}			
@@ -156,6 +157,7 @@ public class LibManGUI extends JFrame{
 			}
 			}
 			resetPane(searchPanel, controlPanel);
+	
 	for(ActionListener al : searchButton2.getActionListeners())
 	{
 		searchButton2.removeActionListener(al);
@@ -189,14 +191,11 @@ public class LibManGUI extends JFrame{
    }
 	
 
-   private void showButtonDemo(){
+   private void runGUI(){
       headerLabel.setText("Library Manager"); 
       addButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-		mainFrame.remove(controlPanel);		
-		mainFrame.setContentPane(addPanel);
-		mainFrame.validate();
-		mainFrame.repaint();
+		resetPane(controlPanel, addPanel);
 		addPanel();
       }});
 
