@@ -1,3 +1,5 @@
+//package libManGUI.LibManGUI;
+
 /**
 This class is used to create a book, and store all of it's member variables
 @author Stefan Knott, Chris Meyer
@@ -5,13 +7,12 @@ This class is used to create a book, and store all of it's member variables
 */
 public class Book
 {	
-	//Scanner key = new Scanner(System.in);
 	public String myTitle = null;
 	public String myRenter = null;
 	public int myLoc = 0;
 	public boolean rentStatus = false;
 
-	//Default Constructor
+	///Default Constructor
 	public Book()
 	{
 		myTitle = null;
@@ -20,7 +21,7 @@ public class Book
 	}
 	
 	/**This method constructs a book with just a title
-	 * @param title 
+	  @param title 
 	*/
 	public Book(String title)
 	{
