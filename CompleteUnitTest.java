@@ -81,6 +81,7 @@ public class CompleteUnitTest extends TestCase {
 	public void testChkOutHandler(){
 		new libManager();
 		Book test = new Book("testTitle");
+		libManager.books.addBook(test);
 		
 		libManager.chkOutHandler("testTitle", "testRenter");
 		assertEquals("testRenter", test.getRenter());
@@ -96,10 +97,11 @@ public class CompleteUnitTest extends TestCase {
 	//Test default expandableArray constructor
 	public void testArrayDefaultConstructor(){
 		expandableArray testArray = new expandableArray();
-		Book test = new Book();
 		assertTrue(testArray.length == 10);
-		//assertEquals(testArray.books, new Book[]{null,null,null,null,null,null,null,null,null,null});
-		assertEquals(testArray.books, new Book[]{test,test,test,test,test,test,test,test,test,test});
+		
+		for(int i = 0; i < testArray.length; i++){
+			assertEquals(null, testArray.books[i]);
+		}
 
 	}
 	
@@ -113,7 +115,7 @@ public class CompleteUnitTest extends TestCase {
 		assertEquals(test, testArray.books[0]);
 		
 		//add duplicate book, should not create a duplicate.
-		//We may decide that this is OK behaviour
+		//We may decide that this is OK behavior
 		testArray.addBook(test);
 		assertNotSame(test, testArray.books[1]);
 		
@@ -127,11 +129,14 @@ public class CompleteUnitTest extends TestCase {
 		//test that first spot is open when no books have been added
 		assertEquals(testArray.openSpot(), 0);
 		
+		Book temp;
 		//fill up our initial array of size 10
 		for(int i = 0; i != 9; i++){
-			int j = i;
-			String title = Integer.toString(j);
-			testArray.addBook(new Book(title));
+			String append = Integer.toString(i);
+			String title = "title" + append;
+			temp = new Book(title);
+			
+			testArray.addBook(temp);
 			assertEquals(i + 1, testArray.openSpot());
 		}
 		
@@ -147,11 +152,13 @@ public class CompleteUnitTest extends TestCase {
 
 		
 		//fill up our array without causing expand() to be called
-		for(int i = 0; i != 10; i++){
-			int j = i;
-			String title = Integer.toString(j);
-			testArray.addBook(new Book(title));
-			}
+		for(int i = 0; i != 9; i++){
+			String append = Integer.toString(i);
+			String title = "title" + append;
+			Book temp = new Book(title);
+			
+			testArray.addBook(temp);
+		}
 		assertEquals(10, testArray.length);
 		
 		//make expand() be called by adding a new book to the already full array
@@ -219,14 +226,7 @@ public class CompleteUnitTest extends TestCase {
 		assertEquals(true,testArray.search(test.getTitle()).getRentStatus());
 		
 	}
-	
-	public void testReadFromFile(){
-		
-	}
-	
-	public void testWriteToFile(){
-		
-	}
+
 	
 //////////////////
 //////////////////END EXPANDABLEARRAY TEST CASES

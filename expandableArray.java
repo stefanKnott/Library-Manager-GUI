@@ -27,21 +27,20 @@ public class expandableArray
 	*/
 	public void addBook(Book bk)
 	{
-
+		if(search(bk.getTitle()) == null){
+			
 		if(shlfSpot < 0 || shlfSpot > length)
-		{
-			System.out.println("Error!");
-		}
+			return;
+		
 		if(totalBooks == length)
-		{
 			this.expand();
-		}
 	
 		books[shlfSpot] = bk;
 		++totalBooks;
 		books[shlfSpot].setLoc(shlfSpot);
 		++shlfSpot;
-		System.out.println("Your book has been added to the shelf!");
+		}
+		return;
 	}
 
 	public int openSpot()
@@ -84,10 +83,14 @@ public class expandableArray
 	{
 		return null;
 	}	 
-		 if(srchByTitle(search_item) != null)
-			 return srchByTitle(search_item);
-		 else
-		 	return searchByRentersName(search_item);
+		 
+	if(srchByTitle(search_item) != null)
+		 return srchByTitle(search_item);
+	else
+	 	if(searchByRentersName(search_item) != null)
+	 		return searchByRentersName(search_item);
+	 	else
+	 		return null;
 	 }
 	
 	/**Sets a book's myRenter variable to the name of the renter passed to the function.
