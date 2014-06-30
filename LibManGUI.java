@@ -1,3 +1,5 @@
+//package libManGUI.LibManGUI;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,58 +18,70 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
- 
-public class LibManGUI extends JFrame{ 
+
+
+/**
+LibManGUI implements Java Swing applications to provide the user with a simple library management program which can keep track
+of books and whom has rented them. 
+@author Stefan Knott 
+*/ 
+public class LibManGUI extends JFrame
+{ 
 
    private static final long serialVersionUID = 1L;
    private JFrame mainFrame;
-   private JLabel headerLabel;
    private JLabel statusLabel;
    private JPanel controlPanel, addPanel, searchPanel, chkOutPanel;
    private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
    private JTextField addTxt, searchTxt, bkTxt, rentTxt;
 
-   public LibManGUI(){
+   ///Default Constructor
+   public LibManGUI()
+   {
       new libManager();
       libManager.readInHandler();
       prepareGUI();      
    }
 
-   public static void main(String[] args){
+   ///Where the GUI is ran from
+   public static void main(String[] args)
+   {
       LibManGUI gui = new LibManGUI();      
       gui.runGUI();   
    }
 	
-   private void prepareGUI(){
-
+   /**Method prepare the layout for the GUI's panels which are used for adding, searching and checking out.
+   */
+   private void prepareGUI()
+   {
+      controlPanel = new JPanel();
       mainFrame = new JFrame("Library Manager");
-      mainFrame.setSize(350,300);
-      mainFrame.setLayout(new GridLayout(1, 5));
-      mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
+      mainFrame.setSize(400, 400);
+      mainFrame.getContentPane().setBackground(new Color(255,255, 255));
 
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
-		libManager.writeToFileHandler();
-		
+		libManager.writeToFileHandler();		
             System.exit(0);
          }        
       });    
 
-      headerLabel = new JLabel("", JLabel.CENTER);        
-      statusLabel = new JLabel("",JLabel.CENTER);    
- 
+      statusLabel = new JLabel("Welcome to Your Library!",JLabel.CENTER);    
+      statusLabel.setBounds(50, 275, 300, 50);	 
+
       addButton = new JButton("Add");
       searchButton = new JButton("Search");
       chkOutButton = new JButton("Checkout");
-      controlPanel = new JPanel();
+
       controlPanel.add(addButton);
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);
-      controlPanel.setBackground(Color.BLACK);
+      controlPanel.add(statusLabel);
+	
+      controlPanel.setBackground(Color.WHITE);
       try{
 	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
 	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
-//	picLabel.setLocation(125, 50);
 	controlPanel.add(picLabel);
        }catch(IOException e){}
     
@@ -85,125 +99,150 @@ public class LibManGUI extends JFrame{
       searchPanel.add(searchButton2);
       searchPanel.add(searchTxt);
       
-	chkOutButton2 = new JButton("Check Out");
-	bkTxt = new JTextField(10);
-	rentTxt = new JTextField(10);
-	chkOutPanel = new JPanel();
-	chkOutPanel.add(chkOutButton2);
-	chkOutPanel.add(bkTxt);
-	chkOutPanel.add(rentTxt);
+      chkOutButton2 = new JButton("Check Out");
+      bkTxt = new JTextField(10);
+      rentTxt = new JTextField(10);
+      chkOutPanel = new JPanel();
+      chkOutPanel.add(chkOutButton2);
+      chkOutPanel.add(bkTxt);
+      chkOutPanel.add(rentTxt);
 
       mainFrame.add(controlPanel);
-
       mainFrame.setVisible(true);  
-
    }
 
+   /**Method used to set the control of the mainFrame
+   @param rmv JPanel to be removed from mainFrame
+   @param set JPanel to be set to MainFrame
+   */
    private void resetPane(JPanel rmv, JPanel set)
    {
 	mainFrame.remove(rmv);
 	mainFrame.setContentPane(set);
 	mainFrame.validate();
 	mainFrame.repaint();
-        mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
-	
+        mainFrame.getContentPane().setBackground(new Color(255, 255, 255));
+
+	statusLabel.setSize(200, 50);
+	statusLabel.setBounds(50, 275, 300, 50);	 
    }
  
+   /**Method used to maintain the control and output for add operations.
+   */
    private void addPanel()
    {
-	for(ActionListener al : addButton2.getActionListeners()){
-		addButton2.removeActionListener(al);
-	}
-		addButton2.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
+	addButton2.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent e)
+		{
 			String addBk = new String();
 			addBk = addTxt.getText().trim();
 			if(addBk.equals(""))
-			{}else{
-			String report = libManager.addHandler(addBk);
-			if(report.equals("Error")){}
+			{}
 			else{
-			System.out.println(report);
-			}
+				String report = libManager.addHandler(addBk);
+				if(report.equals("Error")){}
+				else{
+					statusLabel.setText(addBk + " was added to the library");
+				}
 			}
 			resetPane(addPanel, controlPanel);
-      			mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
-	
-	for(ActionListener al : addButton2.getActionListeners()){
-		addButton2.removeActionListener(al);
-	}			
+      			mainFrame.getContentPane().setBackground(new Color(255, 255, 255));
+			for(ActionListener al : addButton2.getActionListeners())
+			{
+				addButton2.removeActionListener(al);
+			}			
 		}
          });          
    
    }
 
-   private void searchPanel(){
-	for(ActionListener al : searchButton2.getActionListeners()){
-
-		searchButton2.removeActionListener(al);
-	}		
-		searchButton2.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-			String searchBk = searchTxt.getText().trim();
-			if(searchBk.equals("")){}
-			else{
-			String report = libManager.searchHandler(searchBk);
-			if(report.equals("Error")){}
-			else{
-			System.out.println(report);
-			}
+   /**Method used to maintain the control and output for search operations.
+   */
+   private void searchPanel()
+   {
+	searchButton2.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String searchItem = searchTxt.getText().trim();
+			if(searchItem.equals(""))
+			{}
+			else
+			{
+				String report = libManager.searchHandler(searchItem);
+				if(report.equals("Error"))
+				{}
+				else
+				{
+					statusLabel.setText("Book info: " + report);
+				}
 			}
 			resetPane(searchPanel, controlPanel);
 	
-	for(ActionListener al : searchButton2.getActionListeners())
-	{
-		searchButton2.removeActionListener(al);
-	}	
-	}
+			for(ActionListener al : searchButton2.getActionListeners())
+			{
+				searchButton2.removeActionListener(al);
+			}		
+		}
          });
 	return;
    }
 
+   /**Method used to maintain the control and output for checkout operations.
+   */
    private void chkOutPanel()
    {
-	for(ActionListener al : chkOutButton2.getActionListeners())
+	chkOutButton2.addActionListener(new ActionListener()
 	{
-		chkOutButton2.removeActionListener(al);
-	}
-		chkOutButton2.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
+		public void actionPerformed(ActionEvent e)
+		{
 			String bk = bkTxt.getText().trim();
 			String renter = rentTxt.getText().trim();
-			if(bk.equals("") || renter.equals("")){}
-			else{
-			String report = libManager.chkOutHandler(bk, renter);
-			if(report.equals("Error")){}
-			else{
-			System.out.println(report);	
-			}
+			if(bk.equals("") || renter.equals(""))
+			{}
+			else
+			{
+				String report = libManager.chkOutHandler(bk, renter);
+				if(report.equals("Error"))
+				{}
+				else
+				{
+					System.out.println(report);	
+					statusLabel.setText("Book: " + bk + " is now checked out by " + renter);
+				}
 			}
 			resetPane(chkOutPanel, controlPanel);
 		}
-         });
+        });
    }
 	
-
-   private void runGUI(){
-      headerLabel.setText("Library Manager"); 
-      addButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
+   /**Method used to maintain control of the GUI from the control panel
+   */
+   private void runGUI()
+   {
+      addButton.addActionListener(new ActionListener() 
+      {
+         public void actionPerformed(ActionEvent e) 
+	 {
 		resetPane(controlPanel, addPanel);
 		addPanel();
-      }});
+      	 }
+      });
 
-      searchButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
+      searchButton.addActionListener(new ActionListener() 
+      {
+         public void actionPerformed(ActionEvent e) 
+	 {
 		resetPane(controlPanel, searchPanel);
 		searchPanel();
-      }});
+      	 }
+      });
 
-      chkOutButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
+      chkOutButton.addActionListener(new ActionListener() 
+      {
+         public void actionPerformed(ActionEvent e) 
+         {
 		resetPane(controlPanel, chkOutPanel);
 		chkOutPanel();
 		
