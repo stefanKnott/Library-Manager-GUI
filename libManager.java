@@ -61,28 +61,16 @@ public class libManager
 		{
 			return "Error";
 		}
-		String report = books.checkOut(bookTitle, renter);
+		String report = books.search(bookTitle).displayReport();
 		if(report.equals("Error"))
 		{
 			return "Error";
 		}
+		books.checkOut(bookTitle, renter);
 	//	bk.setMyRenter(renter);
 		return report;
 	}
-	/**
-	 * @author Stefan Knott
-	 * This method is used as a handler class.  It is needed to help make it easy to
-	 * edit the infomation in the expandableArray object
-	 */
-	public static void editHandler(String searchItem)
-	{
-		Book bk = books.search(searchItem);
-	    books.editBook(bk);
-	    if(bk != null)
-	    {
-	    	bk.displayReport();
-	    }
-	}
+
         public static void readInHandler()
 	{
 		books.readFromFile();

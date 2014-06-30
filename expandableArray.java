@@ -5,6 +5,8 @@ import java.io.*;
 @version 1.0
 */
 
+
+
 public class expandableArray
 {
 	public Book[] books;
@@ -78,7 +80,7 @@ public class expandableArray
 	*/
 	 public Book search(String search_item)
    	{
-	if(totalBooks == 0)
+	if(totalBooks == 0 || search_item == null)
 	{
 		return null;
 	}	 
@@ -92,18 +94,18 @@ public class expandableArray
 	@param String book : Name of the book to check out
 	@param String renter : Name of the renter who is checking the book out
 	*/
-	public String checkOut(String book, String renter)
+	public Book checkOut(String book, String renter)
 	{
 		Book bk = new Book();
 		bk = search(book);
 		if(bk == null)
 		{
-			return "Error";
+			return null;
 		}
 		else{
-		search(book).setMyRenter(renter);
-		search(book).setRentStatus(true);
-		return search(book).displayReport();
+		bk.setMyRenter(renter);
+		bk.setRentStatus(true);
+		return bk;
 		}
 	}
 
@@ -141,30 +143,7 @@ public class expandableArray
        		return null;
 	}
 	
-	public void editBook(Book bk)
-	{
-/*		System.out.println("Edit Options");
-		System.out.println("1. Edit Title");
-		System.out.println("2. Edit Checkout Date");
-		int menuDecision = 0;
-		if(menuDecision == 1)
-		{
-			System.out.println("New Title: ");
-			String newTitle = "0";
-			bk.setTitle(newTitle);
-		}else if(menuDecision == 2)
-		{
-			System.out.println("New Checkout Date: ");
-			int month = 0;
-			int day = 0;
-			//key.nextInt();
-			int year = 0;
-			//key.nextInt();
-			//key.nextLine();
-			bk.setMyCheckoutDate(month, day, year);
-		}*/
-	}
-	
+
 	/**Loads library (books and renters) into the program from the text file library.txt found in the same directory as the source code.
 	*/
 	public void readFromFile()
@@ -184,7 +163,7 @@ public class expandableArray
 		}catch(IOException e){}
 	}
 
-	/**Writed the library (books and renters) to the file library.txt
+	/**Wrote the library (books and renters) to the file library.txt
 	*/
 	public void writeToFile()
 	{	

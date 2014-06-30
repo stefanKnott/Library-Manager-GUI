@@ -6,10 +6,10 @@ This class is used to create a book, and store all of it's member variables
 public class Book
 {	
 	//Scanner key = new Scanner(System.in);
-	public String myTitle = "";
-	public String myRenter = "";
+	public String myTitle = null;
+	public String myRenter = null;
 	public int myLoc = 0;
-	public boolean rentStatus;
+	public boolean rentStatus = false;
 
 	//Default Constructor
 	public Book()
@@ -97,9 +97,9 @@ public class Book
 	*/
 	public String getRenter()
 	{
-		if (getRentStatus() == false)
-			return "Book not currently checked out";
-		else
+		//if (getRentStatus() == false)
+		//	return "Book not currently checked out";
+		//else
 			return myRenter;
 	}
 	
