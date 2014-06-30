@@ -31,9 +31,9 @@ public class LibManGUI extends JFrame
    private static final long serialVersionUID = 1L;
    private JFrame mainFrame;
    private JLabel statusLabel;
-   private JPanel controlPanel, addPanel, searchPanel, chkOutPanel;
-   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
-   private JTextField addTxt, searchTxt, bkTxt, rentTxt;
+   private JPanel controlPanel, addPanel, searchPanel, chkOutPanel, rmvPanel;
+   private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2, rmvButton, rmvButton2;
+   private JTextField addTxt, searchTxt, bkTxt, rentTxt, rmvTxt;
 
    ///Default Constructor
    public LibManGUI()
@@ -50,13 +50,86 @@ public class LibManGUI extends JFrame
       gui.runGUI();   
    }
 	
+   private void setControlPanelComponents()
+   {
+      statusLabel = new JLabel("Welcome to Your Library!",JLabel.CENTER);    
+      statusLabel.setBounds(40, 275, 300, 50);	  
+
+      addButton = new JButton("Add");
+      rmvButton = new JButton("Remove");
+      searchButton = new JButton("Search");
+      chkOutButton = new JButton("Checkout");
+
+      controlPanel.setLayout(null); 
+      controlPanel.setOpaque(true);  
+
+      addButton.setBounds(250, 75, 115, 30);	 
+      rmvButton.setBounds(250, 110, 115, 30);	 
+      searchButton.setBounds(250, 145, 115, 30);	 
+      chkOutButton.setBounds(250, 180, 115, 30);	 
+
+      try{
+	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
+	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
+        picLabel.setBounds(50, 75, 150, 150);	 
+	controlPanel.add(picLabel);
+       }catch(IOException e){}
+
+      controlPanel.add(addButton);
+      controlPanel.add(rmvButton);
+      controlPanel.add(searchButton);
+      controlPanel.add(chkOutButton);
+      controlPanel.add(statusLabel);	
+      controlPanel.setBackground(Color.WHITE);
+   }
+
+   private void setAddPanelComponents()
+   {
+      addButton2 = new JButton("Add");
+      addTxt = new JTextField(10);
+      addPanel.add(addButton2);
+      addPanel.add(addTxt);
+   }
+
+   private void setRmvPanelComponents()
+   {
+      rmvButton2 = new JButton("Remove");
+      rmvTxt = new JTextField(10);
+      rmvPanel.add(rmvButton2);
+      rmvPanel.add(rmvTxt);
+   }
+   
+ 
+   private void setSearchPanelComponents()
+   {
+      searchButton2 = new JButton("Search");
+      searchTxt = new JTextField(10);
+      searchPanel.add(searchButton2);
+      searchPanel.add(searchTxt); 
+   }
+
+   private void setChkOutPanelComponents()
+   {
+      chkOutButton2 = new JButton("Check Out");
+      bkTxt = new JTextField(10);
+      rentTxt = new JTextField(10);
+      chkOutPanel.add(chkOutButton2);
+      chkOutPanel.add(bkTxt);
+      chkOutPanel.add(rentTxt);
+   }
+
    /**Method prepare the layout for the GUI's panels which are used for adding, searching and checking out.
    */
    private void prepareGUI()
    {
       controlPanel = new JPanel();
+      addPanel = new JPanel();
+      rmvPanel = new JPanel();
+      searchPanel = new JPanel();
+      chkOutPanel = new JPanel();
+
       mainFrame = new JFrame("Library Manager");
-      mainFrame.setSize(400, 400);
+      mainFrame.setSize(400, 350);
       mainFrame.getContentPane().setBackground(new Color(255,255, 255));
 
       mainFrame.addWindowListener(new WindowAdapter() {
@@ -66,46 +139,11 @@ public class LibManGUI extends JFrame
          }        
       });    
 
-      statusLabel = new JLabel("Welcome to Your Library!",JLabel.CENTER);    
-      statusLabel.setBounds(50, 275, 300, 50);	 
-
-      addButton = new JButton("Add");
-      searchButton = new JButton("Search");
-      chkOutButton = new JButton("Checkout");
-
-      controlPanel.add(addButton);
-      controlPanel.add(searchButton);
-      controlPanel.add(chkOutButton);
-      controlPanel.add(statusLabel);
-	
-      controlPanel.setBackground(Color.WHITE);
-      try{
-	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
-	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
-	controlPanel.add(picLabel);
-       }catch(IOException e){}
-    
-      controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-      
-      addButton2 = new JButton("Add");
-      addTxt = new JTextField(10);
-      addPanel = new JPanel();
-      addPanel.add(addButton2);
-      addPanel.add(addTxt);
-
-      searchButton2 = new JButton("Search");
-      searchTxt = new JTextField(10);
-      searchPanel = new JPanel();
-      searchPanel.add(searchButton2);
-      searchPanel.add(searchTxt);
-      
-      chkOutButton2 = new JButton("Check Out");
-      bkTxt = new JTextField(10);
-      rentTxt = new JTextField(10);
-      chkOutPanel = new JPanel();
-      chkOutPanel.add(chkOutButton2);
-      chkOutPanel.add(bkTxt);
-      chkOutPanel.add(rentTxt);
+      setControlPanelComponents();
+      setAddPanelComponents();
+      setSearchPanelComponents();
+      setChkOutPanelComponents();
+      setRmvPanelComponents();
 
       mainFrame.add(controlPanel);
       mainFrame.setVisible(true);  
@@ -156,6 +194,35 @@ public class LibManGUI extends JFrame
          });          
    
    }
+
+   private void rmvPanel()
+   {
+	rmvButton2.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String rmvBk = new String();
+			rmvBk = rmvTxt.getText().trim();
+			if(rmvBk.equals(""))
+			{}
+			else{
+				String report = libManager.addHandler(rmvBk);
+				if(report.equals("Error")){}
+				else{
+					statusLabel.setText(rmvBk + " was removed from the library");
+				}
+			}
+			resetPane(addPanel, controlPanel);
+      			mainFrame.getContentPane().setBackground(new Color(255, 255, 255));
+			for(ActionListener al : addButton2.getActionListeners())
+			{
+				addButton2.removeActionListener(al);
+			}			
+		}
+         });          
+   
+   }
+
 
    /**Method used to maintain the control and output for search operations.
    */
@@ -230,6 +297,7 @@ public class LibManGUI extends JFrame
       	 }
       });
 
+
       searchButton.addActionListener(new ActionListener() 
       {
          public void actionPerformed(ActionEvent e) 
@@ -248,8 +316,18 @@ public class LibManGUI extends JFrame
 		
          }
       });
-	
+
+      rmvButton.addActionListener(new ActionListener() 
+      {
+         public void actionPerformed(ActionEvent e) 
+	 {
+		resetPane(controlPanel, rmvPanel);
+                rmvPanel();
+      	 }
+      });
+
       controlPanel.add(addButton);
+      controlPanel.add(rmvButton);
       controlPanel.add(searchButton);
       controlPanel.add(chkOutButton);       
 
