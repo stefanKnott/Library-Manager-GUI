@@ -114,7 +114,7 @@ public class expandableArray
 	public Book srchByTitle(String searchItem)
 	{
       		String bookTitle = searchItem;
-		for(int i = 0; i < totalBooks; ++i)
+		for(int i = 0; i < totalBooks; i++)
       		{
 			String temp = books[i].getTitle();
           		if(bookTitle.equals(temp))
@@ -169,7 +169,6 @@ public class expandableArray
 	*/
 	public void readFromFile()
 	{       
-		int i = 0;
 		try{
 			BufferedReader in = new BufferedReader(new FileReader("library.txt"));
 			String line;

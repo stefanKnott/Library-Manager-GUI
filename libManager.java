@@ -1,5 +1,3 @@
-//package libManGUI;
-
 /**
  * 
  * @author Stefan KNOTT

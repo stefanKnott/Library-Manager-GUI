@@ -42,7 +42,7 @@ public class LibManGUI extends JFrame{
 
       mainFrame = new JFrame("Library Manager");
       mainFrame.setSize(250,200);
-      mainFrame.setLayout(new GridLayout());
+      mainFrame.setLayout(new GridLayout(1, 5));
       mainFrame.getContentPane().setBackground(new Color(0, 0, 0));
 
       mainFrame.addWindowListener(new WindowAdapter() {

@@ -1,7 +1,3 @@
-//package libManGUI;
-//package com.tooCoolforSchool.libraryManager.server;
-
-//import java.util.Scanner;
 /**
 This class is used to create a book, and store all of it's member variables
 @author Stefan Knott, Chris Meyer
