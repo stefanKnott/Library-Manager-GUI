@@ -1,3 +1,5 @@
+//package libManGUI.LibManGUI;
+
 /**
  * 
  * @author Stefan KNOTT
@@ -19,10 +21,8 @@ public class libManager
 	}
 	
 	/**
-	 * @author Stefan Knott
-	 * This method serves as a handler method to handle the addition of books to the
-	 * expandableArray object.
-	 * @param title 
+	 This method serves as a handler method to handle the addition of books to the expandableArray object.
+	 @param title The title of the book to be added
 	 */
 	public static String addHandler(String title)
 	{
@@ -34,13 +34,11 @@ public class libManager
 		newBook.setTitle(title);
 		books.addBook(newBook);
 		return newBook.displayReport();	
-		
 	}
 
 	/**
-	 * @author Stefan Knott, Chris Meyer
-	 * This method serves as a handler method to make searching for a book in the 
-	 * expandableArray object easy
+	 This method serves as a handler method to make searching for a book in the expandableArray object easy.
+	 @param searchItem The search query typed in the search box
 	 */
 	public static String searchHandler(String searchItem)
 	{
@@ -56,8 +54,12 @@ public class libManager
 		return bk.displayReport();
 	}
 	
-	public static String chkOutHandler(String bookTitle, String renter){
-		if(bookTitle == null || renter == null)
+	/**Handler method used to check out a book with title bookTitle to the renter rentee
+	@param bookTtile Title of book to be checked out
+	@param rentee Name of the person renting the book
+	*/
+	public static String chkOutHandler(String bookTitle, String rentee){
+		if(bookTitle == null || rentee == null)
 		{
 			return "Error";
 		}
@@ -66,22 +68,27 @@ public class libManager
 		{
 			return "Error";
 		}
-		books.checkOut(bookTitle, renter);
-	//	bk.setMyRenter(renter);
+		books.checkOut(bookTitle, rentee);
 		return report;
 	}
 
+	/**Handler method used to read in the library from library.txt
+	*/
         public static void readInHandler()
 	{
 		books.readFromFile();
 	}	
+
+/*
 	public void removeHandler(String searchItem)
 	{
 		Book bk = books.search(searchItem);
 		books.removeBook(bk);
 		books.writeToFile();
 	}
-
+*/
+	/**Handler method used to call the writeToFile function in the ADT expandableArray
+	*/
 	public static void writeToFileHandler()
 	{
 		books.writeToFile();
