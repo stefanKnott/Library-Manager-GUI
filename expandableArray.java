@@ -1,11 +1,11 @@
+//package libManGUI.LibManGUI;
+
 import java.io.*;
 
 /**This class is an expadable array data structure
 @author Stefan Knott
 @version 1.0
 */
-
-
 
 public class expandableArray
 {
@@ -21,9 +21,8 @@ public class expandableArray
 		books = new Book[length];
 	}
 	
-	/**
-	*Function used to add a book to the library (expandableARray).
-	*@param Book bk : book to add
+	/**Adds a book to the library (expandableARray).
+	@param bk Book to add
 	*/
 	public void addBook(Book bk)
 	{
@@ -44,6 +43,8 @@ public class expandableArray
 		System.out.println("Your book has been added to the shelf!");
 	}
 
+	/**Finds the first spot in books array that is empty (set to null)
+	*/
 	public int openSpot()
 	{
 		for(int i = 0; i < books.length; i++)
@@ -56,7 +57,7 @@ public class expandableArray
 		return -1;
 	}
 
-	/**Used to expand by copying the data into another array 2x the size of 	the original.
+	/**Expands the array by copying the data into another array 2x the size of the original.
 	*/
 	public void expand()
 	{
@@ -70,6 +71,9 @@ public class expandableArray
 		length *= 2;	
 	}
 
+	/**Set's bk's location in the array to null -- effectively removing it.
+	@param bk Book to remove
+	*/
 	public void removeBook(Book bk)
 	{
 		--totalBooks;
@@ -77,6 +81,8 @@ public class expandableArray
 	}
 	
 	/**Searches for the search query via search by title and search by renter functions.
+	@param search_item The user's search query
+	@return Book which has information mation the search query
 	*/
 	 public Book search(String search_item)
    	{
@@ -110,12 +116,11 @@ public class expandableArray
 	}
 
 	/**Searches the book array to see if a book's name matches the search item.
-	@param String searchItem : The search query
-	@return Book : return the book if it's name matches the search query
+	@param bookTitle The search query
+	@return Book if it's name matches the search query
 	*/
-	public Book srchByTitle(String searchItem)
+	public Book srchByTitle(String bookTitle)
 	{
-      		String bookTitle = searchItem;
 		for(int i = 0; i < totalBooks; i++)
       		{
 			String temp = books[i].getTitle();
@@ -128,8 +133,8 @@ public class expandableArray
 	}
 
 	/**Search the book array to see if a book is rented by someone whose name matches the parameter passed.
-	@param String rentee : the search query
-	@return Book : return the book if it is rented by someone whose name matches the parameter rentee passed
+	@param rentee The search query
+	@return Book if it is rented by someone whose name matches the parameter rentee passed
 	*/
 	public Book searchByRentersName(String rentee)
 	{
@@ -173,7 +178,7 @@ public class expandableArray
 			PrintWriter("library.txt");
 			for(int i = 0; i < totalBooks; ++i)
 			{
-				output.println(books[i].displayReport());
+				output.println(books[i].displayReport());		
 			}
 			output.close();
 		}catch(IOException e){}
