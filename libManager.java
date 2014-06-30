@@ -27,9 +27,7 @@ public class libManager
 	public static String addHandler(String title)
 	{
 		if(title == null)
-		{
 			return "Error";
-		}
 		Book newBook = new Book(title);
 		newBook.setTitle(title);
 		books.addBook(newBook);
