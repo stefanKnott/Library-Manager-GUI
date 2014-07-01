@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
 /**
 LibManGUI implements Java Swing applications to provide the user with a simple library management program which can keep track
 of books and whom has rented them. 
@@ -73,6 +72,7 @@ public class LibManGUI extends JFrame
 	controlPanel.add(picLabel);
        }catch(IOException e){}
 
+
       controlPanel.add(addButton);
       controlPanel.add(rmvButton);
       controlPanel.add(searchButton);
@@ -81,39 +81,100 @@ public class LibManGUI extends JFrame
       controlPanel.setBackground(Color.WHITE);
    }
 
+   private void addPicture(JPanel panel)
+   {
+      try{
+	BufferedImage bookworm = ImageIO.read(new File("bookworm21.gif"));
+	JLabel wormLabel = new JLabel(new ImageIcon(bookworm));
+        wormLabel.setBounds(50, 265, 150, 67);	 
+	panel.add(wormLabel);
+       }catch(IOException e){}	
+   }
+
    private void setAddPanelComponents()
    {
+      addPanel.setLayout(null); 
+      addPanel.setOpaque(true);  
+
+      JLabel addLabel = new JLabel("Book title:");
       addButton2 = new JButton("Add");
       addTxt = new JTextField(10);
+
+      addPicture(addPanel);
+
+      addLabel.setBounds(55, 105, 115, 30);
+      addButton2.setBounds(250, 105, 115, 30);	 	
+      addTxt.setBounds(130, 105, 115, 30);
+
+      addPanel.add(addLabel);
       addPanel.add(addButton2);
       addPanel.add(addTxt);
    }
 
    private void setRmvPanelComponents()
    {
+      rmvPanel.setLayout(null); 
+      rmvPanel.setOpaque(true);  
+
       rmvButton2 = new JButton("Remove");
       rmvTxt = new JTextField(10);
+      JLabel rmvLabel = new JLabel("Book title: ");
       rmvPanel.add(rmvButton2);
       rmvPanel.add(rmvTxt);
+      rmvPanel.add(rmvLabel);
+
+      addPicture(rmvPanel);
+
+      rmvLabel.setBounds(55, 105, 115, 30);
+      rmvButton2.setBounds(250, 105, 115, 30);	 	
+      rmvTxt.setBounds(130, 105, 115, 30);
    }
    
  
    private void setSearchPanelComponents()
    {
+      searchPanel.setLayout(null); 
+      searchPanel.setOpaque(true);  
+
       searchButton2 = new JButton("Search");
       searchTxt = new JTextField(10);
+      JLabel searchLabel = new JLabel("Book title:");
+
       searchPanel.add(searchButton2);
-      searchPanel.add(searchTxt); 
+      searchPanel.add(searchTxt);
+      searchPanel.add(searchLabel);
+
+      addPicture(searchPanel);
+
+      searchLabel.setBounds(55, 105, 115, 30);
+      searchButton2.setBounds(250, 105, 115, 30);	 	
+      searchTxt.setBounds(130, 105, 115, 30);
    }
 
    private void setChkOutPanelComponents()
    {
+      chkOutPanel.setLayout(null); 
+      chkOutPanel.setOpaque(true);  
+
       chkOutButton2 = new JButton("Check Out");
       bkTxt = new JTextField(10);
       rentTxt = new JTextField(10);
+      JLabel bookLabel = new JLabel("Book title:");
+      JLabel renterLabel = new JLabel("Renter:");
+
       chkOutPanel.add(chkOutButton2);
       chkOutPanel.add(bkTxt);
       chkOutPanel.add(rentTxt);
+      chkOutPanel.add(bookLabel);
+      chkOutPanel.add(renterLabel);
+
+      addPicture(chkOutPanel);
+       
+      bookLabel.setBounds(55, 100, 115, 30);
+      renterLabel.setBounds(75, 135, 115, 30);
+      chkOutButton2.setBounds(250, 135, 115, 30);	 	
+      bkTxt.setBounds(130, 100, 115, 30);
+      rentTxt.setBounds(130, 135, 115, 30);
    }
 
    /**Method prepare the layout for the GUI's panels which are used for adding, searching and checking out.
@@ -129,6 +190,7 @@ public class LibManGUI extends JFrame
       mainFrame = new JFrame("Library Manager");
       mainFrame.setSize(400, 350);
       mainFrame.getContentPane().setBackground(new Color(255,255, 255));
+      mainFrame.setResizable(false);
 
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
@@ -166,7 +228,7 @@ public class LibManGUI extends JFrame
    /**Method used to maintain the control and output for add operations.
    */
    private void addPanel()
-   {
+   {	
 	addButton2.addActionListener(new ActionListener()
 	{
 		public void actionPerformed(ActionEvent e)
@@ -273,7 +335,6 @@ public class LibManGUI extends JFrame
 				{}
 				else
 				{
-					System.out.println(report);	
 					statusLabel.setText("Book: " + bk + " is now checked out by " + renter);
 				}
 			}
