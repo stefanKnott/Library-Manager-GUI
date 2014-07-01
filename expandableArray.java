@@ -12,6 +12,7 @@ public class expandableArray
 	public Book[] books;
 	private int totalBooks = 0;
 	private int shlfSpot = 0;
+        private int openSpot = -1;
 	public int length;
 
 	///Constructor for expandable array
@@ -26,7 +27,7 @@ public class expandableArray
 	*/
 	public void addBook(Book bk)
 	{
-		if(search(bk.getTitle()) == null){
+	//	if(search(bk.getTitle()) == null){
 			
 		if(shlfSpot < 0 || shlfSpot > length)
 			return;
@@ -34,26 +35,19 @@ public class expandableArray
 		if(totalBooks == length)
 			this.expand();
 	
-		books[shlfSpot] = bk;
-		++totalBooks;
-		books[shlfSpot].setLoc(shlfSpot);
-		++shlfSpot;
-		}
-		return;
-	}
-
-	/**Finds the first spot in books array that is empty (set to null)
-	*/
-	public int openSpot()
-	{
-		for(int i = 0; i < books.length; i++)
+		if(openSpot >= 0)
 		{
-			if(books[i] == null)
-			{
-				return i;
-			}
+			books[openSpot] = bk;
+			books[openSpot].setLoc(openSpot);
+			openSpot = -1;
+		}else{
+		books[shlfSpot] = bk;
+		books[shlfSpot].setLoc(shlfSpot);
+		++shlfSpot;	
 		}
-		return -1;
+		++totalBooks;	
+	//	}
+		return;
 	}
 
 	/**Expands the array by copying the data into another array 2x the size of the original.
@@ -70,13 +64,33 @@ public class expandableArray
 		length *= 2;	
 	}
 
+	public int findBk(String name)
+	{
+		for(int i = 0; i < length; i++)
+		{
+			if(books[i] == null)
+			{}
+				if(books[i] != null)
+				{
+					if(name.equals(books[i].getTitle()))
+					{
+						return i;
+					}
+				}
+		}
+		return -1;
+	}
+
 	/**Set's bk's location in the array to null -- effectively removing it.
 	@param bk Book to remove
 	*/
 	public void removeBook(Book bk)
 	{
-		--totalBooks;
-		books[bk.myLoc] = null;
+		int loc = findBk(bk.myTitle);
+		if(loc == -1){return;}
+		openSpot = loc;
+		books[loc] = null;
+		--totalBooks;	
 	}
 	
 	/**Searches for the search query via search by title and search by renter functions.
@@ -89,12 +103,15 @@ public class expandableArray
 	{
 		return null;
 	}	 
-		 
-	if(srchByTitle(search_item) != null)
-		 return srchByTitle(search_item);
+	
+	Book bk = new Book();
+	bk = srchByTitle(search_item);	 
+	if(bk != null)
+		 return bk;
 	else
-	 	if(searchByRentersName(search_item) != null)
-	 		return searchByRentersName(search_item);
+		bk = searchByRentersName(search_item);
+	 	if(bk != null)
+	 		return bk;
 	 	else
 	 		return null;
 	 }
@@ -126,11 +143,13 @@ public class expandableArray
 	{
 		for(int i = 0; i < totalBooks; i++)
       		{
+			if(books[i] != null){
 			String temp = books[i].getTitle();
           		if(bookTitle.equals(temp))
           		{
               			return books[i];
           		}
+			}
        		}
 		return null;
 	}
@@ -143,11 +162,15 @@ public class expandableArray
 	{
        		for(int i = 0; i < totalBooks; i++)
        		{
-      	 		if(books[i].myRenter.equals(rentee))
-         		{
-               			return books[i];
-         		}
-       		}
+			if(books[i] != null){
+			if(books[i].myRenter != null)
+			{
+      	 			if(books[i].myRenter.equals(rentee))
+         			{
+               				return books[i];
+         			}
+			}
+       		}}
        		return null;
 	}
 	
@@ -179,9 +202,13 @@ public class expandableArray
 		{
 			PrintWriter output = new
 			PrintWriter("library.txt");
-			for(int i = 0; i < totalBooks; ++i)
+			for(int i = 0; i < length; ++i)
 			{
-				output.println(books[i].displayReport());		
+				if(books[i] == null)
+				{}
+				else{
+					output.println(books[i].displayReport());		
+				}
 			}
 			output.close();
 		}catch(IOException e){}
