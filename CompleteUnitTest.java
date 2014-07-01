@@ -217,10 +217,10 @@ public class CompleteUnitTest extends TestCase {
 		//Attempt to checkout non-existent book
 		assertEquals(null, testArray.checkOut("Luke Skywalker", "Darth Vader"));
 		
-		//Attempt to checkout a book we just added and check its status before and after
+		//Book is not yet checked out, but is added
 		testArray.addBook(test);
 		assertEquals(false,testArray.search(test.getTitle()).getRentStatus());
-		
+		//Book gets checked out
 		assertEquals(test, testArray.checkOut(test.getTitle(), "Obi-Wan Kenobi"));
 		assertEquals("Obi-Wan Kenobi", testArray.search(test.getTitle()).getRenter());
 		assertEquals(true,testArray.search(test.getTitle()).getRentStatus());

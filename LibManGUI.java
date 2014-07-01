@@ -2,7 +2,6 @@
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,6 +17,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.BoxLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.SpringLayout;
 
 
 /**
@@ -34,6 +39,7 @@ public class LibManGUI extends JFrame
    private JPanel controlPanel, addPanel, searchPanel, chkOutPanel;
    private JButton addButton, addButton2, searchButton, searchButton2, chkOutButton, chkOutButton2;
    private JTextField addTxt, searchTxt, bkTxt, rentTxt;
+   private JLabel picLabel;
 
    ///Default Constructor
    public LibManGUI()
@@ -64,28 +70,20 @@ public class LibManGUI extends JFrame
 		libManager.writeToFileHandler();		
             System.exit(0);
          }        
-      });    
-
-      statusLabel = new JLabel("Welcome to Your Library!",JLabel.CENTER);    
-      statusLabel.setBounds(50, 275, 300, 50);	 
-
-      addButton = new JButton("Add");
-      searchButton = new JButton("Search");
-      chkOutButton = new JButton("Checkout");
-
-      controlPanel.add(addButton);
-      controlPanel.add(searchButton);
-      controlPanel.add(chkOutButton);
-      controlPanel.add(statusLabel);
+      });
 	
       controlPanel.setBackground(Color.WHITE);
       try{
 	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
-	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
-	controlPanel.add(picLabel);
+	      controlPanel.setLayout(null);
+	      picLabel = new JLabel(new ImageIcon(mainIcon));
+	      picLabel.setBounds(10, 43, 135, 121);
+	      controlPanel.add(picLabel);
        }catch(IOException e){}
-    
-      controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+      
+      statusLabel = new JLabel("Welcome to Your Library!");
+      statusLabel.setBounds(138, 23, 157, 16);	 
+      controlPanel.add(statusLabel);
       
       addButton2 = new JButton("Add");
       addTxt = new JTextField(10);
@@ -107,7 +105,18 @@ public class LibManGUI extends JFrame
       chkOutPanel.add(bkTxt);
       chkOutPanel.add(rentTxt);
 
-      mainFrame.add(controlPanel);
+      mainFrame.getContentPane().add(controlPanel);
+      
+            addButton = new JButton("Add");
+            addButton.setBounds(151, 45, 75, 29);
+            
+                  controlPanel.add(addButton);
+                  searchButton = new JButton("Search");
+                  searchButton.setBounds(151, 80, 85, 29);
+                  controlPanel.add(searchButton);
+                  chkOutButton = new JButton("Checkout");
+                  chkOutButton.setBounds(151, 115, 104, 29);
+                  controlPanel.add(chkOutButton);
       mainFrame.setVisible(true);  
    }
 
@@ -123,8 +132,8 @@ public class LibManGUI extends JFrame
 	mainFrame.repaint();
         mainFrame.getContentPane().setBackground(new Color(255, 255, 255));
 
-	statusLabel.setSize(200, 50);
-	statusLabel.setBounds(50, 275, 300, 50);	 
+//	statusLabel.setSize(200, 50);
+//	statusLabel.setBounds(50, 275, 300, 50);	 
    }
  
    /**Method used to maintain the control and output for add operations.
@@ -207,8 +216,7 @@ public class LibManGUI extends JFrame
 				if(report.equals("Error"))
 				{}
 				else
-				{
-					System.out.println(report);	
+				{	
 					statusLabel.setText("Book: " + bk + " is now checked out by " + renter);
 				}
 			}
