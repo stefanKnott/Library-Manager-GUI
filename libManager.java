@@ -77,14 +77,12 @@ public class libManager
 		books.readFromFile();
 	}	
 
-/*
-	public void removeHandler(String searchItem)
+	public static String rmvHandler(String searchItem)
 	{
-		Book bk = books.search(searchItem);
-		books.removeBook(bk);
-		books.writeToFile();
+		books.removeBook(books.search(searchItem));
+		return searchItem;
 	}
-*/
+
 	/**Handler method used to call the writeToFile function in the ADT expandableArray
 	*/
 	public static void writeToFileHandler()

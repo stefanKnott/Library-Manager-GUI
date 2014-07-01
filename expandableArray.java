@@ -76,7 +76,8 @@ public class expandableArray
 	public void removeBook(Book bk)
 	{
 		--totalBooks;
-		books[bk.myLoc] = null;
+		bk = null;
+
 	}
 	
 	/**Searches for the search query via search by title and search by renter functions.

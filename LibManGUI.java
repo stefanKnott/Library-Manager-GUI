@@ -206,7 +206,7 @@ public class LibManGUI extends JFrame
 			if(rmvBk.equals(""))
 			{}
 			else{
-				String report = libManager.addHandler(rmvBk);
+				String report = libManager.rmvHandler(rmvBk);
 				if(report.equals("Error")){}
 				else{
 					statusLabel.setText(rmvBk + " was removed from the library");
