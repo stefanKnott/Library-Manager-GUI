@@ -61,7 +61,16 @@ public class libManager
 		{
 			return "Error";
 		}
-		String report = books.search(bookTitle).displayReport();
+                Book bk = new Book();
+		bk = books.search(bookTitle);
+		String report = "";
+		if(bk == null)
+		{
+			return "Error";
+		}else
+		{
+			report = bk.displayReport();
+		}
 		if(report.equals("Error"))
 		{
 			return "Error";
@@ -79,10 +88,16 @@ public class libManager
 
 	public static String rmvHandler(String searchItem)
 	{
-		books.removeBook(books.search(searchItem));
+		Book bk = new Book();
+		bk = books.search(searchItem);
+		if(bk != null){
+		books.removeBook(bk);
 		return searchItem;
+		}else
+		{
+			return searchItem + "not found";
+		}
 	}
-
 	/**Handler method used to call the writeToFile function in the ADT expandableArray
 	*/
 	public static void writeToFileHandler()
