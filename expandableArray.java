@@ -139,10 +139,13 @@ public class expandableArray
 	{
        		for(int i = 0; i < totalBooks; i++)
        		{
-      	 		if(books[i].myRenter.equals(rentee))
-         		{
-               			return books[i];
-         		}
+			if(books[i].myRenter != null)
+			{
+      	 			if(books[i].myRenter.equals(rentee))
+         			{
+               				return books[i];
+         			}
+			}
        		}
        		return null;
 	}
