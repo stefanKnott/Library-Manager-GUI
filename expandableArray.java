@@ -12,6 +12,7 @@ public class expandableArray
 	public Book[] books;
 	private int totalBooks = 0;
 	private int shlfSpot = 0;
+        private int openSpot = -1;
 	public int length;
 
 	///Constructor for expandable array
@@ -26,7 +27,7 @@ public class expandableArray
 	*/
 	public void addBook(Book bk)
 	{
-		if(search(bk.getTitle()) == null){
+	//	if(search(bk.getTitle()) == null){
 			
 		if(shlfSpot < 0 || shlfSpot > length)
 			return;
@@ -34,26 +35,19 @@ public class expandableArray
 		if(totalBooks == length)
 			this.expand();
 	
-		books[shlfSpot] = bk;
-		++totalBooks;
-		books[shlfSpot].setLoc(shlfSpot);
-		++shlfSpot;
-		}
-		return;
-	}
-
-	/**Finds the first spot in books array that is empty (set to null)
-	*/
-	public int openSpot()
-	{
-		for(int i = 0; i < books.length; i++)
+		if(openSpot >= 0)
 		{
-			if(books[i] == null)
-			{
-				return i;
-			}
+			books[openSpot] = bk;
+			books[openSpot].setLoc(openSpot);
+			openSpot = -1;
+		}else{
+		books[shlfSpot] = bk;
+		books[shlfSpot].setLoc(shlfSpot);
 		}
-		return -1;
+		++totalBooks;	
+		++shlfSpot;
+	//	}
+		return;
 	}
 
 	/**Expands the array by copying the data into another array 2x the size of the original.
@@ -76,6 +70,7 @@ public class expandableArray
 	public void removeBook(Book bk)
 	{
 		--totalBooks;
+		openSpot = bk.myLoc;
 		bk = null;
 
 	}
