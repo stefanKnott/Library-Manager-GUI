@@ -95,7 +95,7 @@ public class libManager
 		return searchItem;
 		}else
 		{
-			return searchItem + "not found";
+			return "Error";
 		}
 	}
 	/**Handler method used to call the writeToFile function in the ADT expandableArray
