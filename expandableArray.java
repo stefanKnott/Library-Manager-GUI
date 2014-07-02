@@ -1,5 +1,3 @@
-//package libManGUI.LibManGUI;
-
 import java.io.*;
 
 /**This class is an expadable array data structure
@@ -15,7 +13,8 @@ public class expandableArray
         private int openSpot = -1;
 	public int length;
 
-	///Constructor for expandable array
+	/**Constructor for expandable array
+	*/
 	public expandableArray()
 	{
 		length = 10;
@@ -27,7 +26,7 @@ public class expandableArray
 	*/
 	public void addBook(Book bk)
 	{
-	//	if(search(bk.getTitle()) == null){
+		if(search(bk.getTitle()) == null){
 			
 		if(shlfSpot < 0 || shlfSpot > length)
 			return;
@@ -46,7 +45,7 @@ public class expandableArray
 		++shlfSpot;	
 		}
 		++totalBooks;	
-	//	}
+		}
 		return;
 	}
 
@@ -64,6 +63,11 @@ public class expandableArray
 		length *= 2;	
 	}
 
+
+	/**This function is used to return the index in the array of the book with a title matching the name.
+	@param name Book name to search for
+	@return the index in the array of the searched book
+	*/
 	public int findBk(String name)
 	{
 		for(int i = 0; i < length; i++)

@@ -1,11 +1,6 @@
-//package libManGUI.LibManGUI;
-
-/**
- * 
- * @author Stefan KNOTT
- * This class serves as a Management class for the user's library.  Then methods here
- * are used to handle and change the library's data which is held in an epandableArray
- * object
+/** 
+@author Stefan Knott
+This class serves as a Management class for the user's library.Then methods here are used to handle and change the library's data which is held in an epandableArray object.
  */
 public class libManager
 {
@@ -86,6 +81,10 @@ public class libManager
 		books.readFromFile();
 	}	
 
+	/**Handler method used to remove a book relating to the searchItem from the array.
+	@param searchItem the item, whether be Book Title or Renter
+	@return the searchItem or Error upon error
+	*/
 	public static String rmvHandler(String searchItem)
 	{
 		Book bk = new Book();

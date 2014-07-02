@@ -1,5 +1,3 @@
-//package libManGUI.LibManGUI;
-
 /**
 This class is used to create a book, and store all of it's member variables
 @author Stefan Knott, Chris Meyer
@@ -12,12 +10,14 @@ public class Book
 	public int myLoc = 0;
 	public boolean rentStatus = false;
 
-	///Default Constructor
+	/**Default Constructor
+	*/
 	public Book()
 	{
 		myTitle = null;
 		myRenter = null;
 		rentStatus = false;
+		myLoc = -1;
 	}
 	
 	/**This method constructs a book with just a title
@@ -28,6 +28,7 @@ public class Book
 		myTitle = title;
 		myRenter = null;
 		rentStatus = false;
+		myLoc = -1;
 	}
 	
 	/**This method constructs a book when passed a title, shelf spot, renter and rented status
@@ -45,14 +46,6 @@ public class Book
 			rentStatus = false;
 		else
 			rentStatus = rented;
-	}
-	
-	public void createFromUser()
-	{
-		System.out.println("What is the title of the book?");
-		String name = "0";
-		//key.nextLine();
-		this.setTitle(name);
 	}
 	
 	/**This method sets the name for the book
@@ -98,10 +91,7 @@ public class Book
 	*/
 	public String getRenter()
 	{
-		//if (getRentStatus() == false)
-		//	return "Book not currently checked out";
-		//else
-			return myRenter;
+		return myRenter;
 	}
 	
 	/**This method returns the rent status for this book

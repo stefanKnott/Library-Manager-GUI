@@ -1,5 +1,3 @@
-//package libManGUI.LibManGUI;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +44,9 @@ public class LibManGUI extends JFrame
       LibManGUI gui = new LibManGUI();      
       gui.runGUI();   
    }
-	
+
+   /**Method used to set all components and properties relating to the controlPanel.
+   */	
    private void setControlPanelComponents()
    {
       statusLabel = new JLabel("Welcome to Your Library!",JLabel.CENTER);    
@@ -66,7 +66,7 @@ public class LibManGUI extends JFrame
       chkOutButton.setBounds(250, 180, 115, 30);	 
 
       try{
-	BufferedImage mainIcon = ImageIO.read(new File("bookworm.jpg"));
+	BufferedImage mainIcon = ImageIO.read(getClass().getResource("/bookworm.jpg"));
 	JLabel picLabel = new JLabel(new ImageIcon(mainIcon));
         picLabel.setBounds(50, 75, 150, 150);	 
 	controlPanel.add(picLabel);
@@ -81,16 +81,21 @@ public class LibManGUI extends JFrame
       controlPanel.setBackground(Color.WHITE);
    }
 
+   /**Method used to add the common bookworm picture to JPanels.
+   @param panel JPanel to add the picture to
+   */
    private void addPicture(JPanel panel)
    {
       try{
-	BufferedImage bookworm = ImageIO.read(new File("bookworm21.gif"));
+	BufferedImage bookworm = ImageIO.read(getClass().getResource("/bookworm21.gif"));
 	JLabel wormLabel = new JLabel(new ImageIcon(bookworm));
         wormLabel.setBounds(50, 265, 150, 67);	 
 	panel.add(wormLabel);
        }catch(IOException e){}	
    }
 
+   /**Method used to set all components and properties relating to the addPanel.
+   */	
    private void setAddPanelComponents()
    {
       addPanel.setLayout(null); 
@@ -111,6 +116,9 @@ public class LibManGUI extends JFrame
       addPanel.add(addTxt);
    }
 
+   /**Method used to set all components and properties relating to the rmvPanel.
+   */	
+
    private void setRmvPanelComponents()
    {
       rmvPanel.setLayout(null); 
@@ -130,7 +138,9 @@ public class LibManGUI extends JFrame
       rmvTxt.setBounds(130, 105, 115, 30);
    }
    
- 
+
+   /**Method used to set all components and properties relating to the searchPanel.
+   */	 
    private void setSearchPanelComponents()
    {
       searchPanel.setLayout(null); 
@@ -151,6 +161,8 @@ public class LibManGUI extends JFrame
       searchTxt.setBounds(130, 105, 115, 30);
    }
 
+   /**Method used to set all components and properties relating to the chkOutPanel.
+   */	
    private void setChkOutPanelComponents()
    {
       chkOutPanel.setLayout(null); 
@@ -209,7 +221,7 @@ public class LibManGUI extends JFrame
       mainFrame.setVisible(true);  
    }
 
-   /**Method used to set the control of the mainFrame
+   /**Method used to set the control of the mainFrame.
    @param rmv JPanel to be removed from mainFrame
    @param set JPanel to be set to MainFrame
    */
@@ -255,6 +267,8 @@ public class LibManGUI extends JFrame
    
    }
 
+   /**Method used to maintain the control and output for remove operations.
+   */
    private void rmvPanel()
    {
 	rmvButton2.addActionListener(new ActionListener()
